@@ -11,12 +11,20 @@ os_type = platform.system()
 __C = easydict.EasyDict()
 cfg = __C
 
+# POSSIBLE MODIFICAITON NEEDED FOR NEW TRAINING
+# 1. CLASS_NAMES
+# 2. DATASET_PATH
+# 3. MODEL_NAME
+
 ###########################################
 # Class Configurations
 # __C.CLASS_NAMES = ['normal', 'riot', 'crash', 'fire', 'army', 'terrorism', 'weapon', 'bloody', 'protest']
-__C.CLASS_NAMES = ['normal', 'riot', 'crash', 'fire',
-                   'army', 'terrorism', 'weapon', 'bloody',
-                   'protest']
+# __C.CLASS_NAMES = ['normal', 'riot', 'crash', 'fire',
+#                    'army', 'terrorism', 'weapon', 'bloody',
+#                    'protest']
+__C.CLASS_NAMES = ['normal', 'army', 'bloody', 'crash', 'fire', 'identity',
+                   'normal_artificial', 'normal_crowd', 'normal_document',
+                   'protest', 'riot', 'terrorism', 'weapon']
 __C.NUM_CLASSES = len(__C.CLASS_NAMES)
 
 # Model Configurations
@@ -46,8 +54,8 @@ if os_type == 'Windows':
     __C.TRAIN.VAL_DATASET_PATH = r'F:\DATASET2019\baokong12_20190703\val.txt'
 elif os_type == 'Linux':
     __C.TRAIN.PRETRAINED_WEIGHT_PATH = '/home/deploy/rinoshinme/projects/pretrained_models'
-    __C.TRAIN.TRAIN_DATASET_PATH = '/home/deploy/rinoshinme/data/baokong12_20190703/train.txt'
-    __C.TRAIN.VAL_DATASET_PATH = '/home/deploy/rinoshinme/data/baokong12_20190703/val.txt'
+    __C.TRAIN.TRAIN_DATASET_PATH = '/home/deploy/rinoshinme/data/baokong13_20190731/train.txt'
+    __C.TRAIN.VAL_DATASET_PATH = '/home/deploy/rinoshinme/data/baokong13_20190731/val.txt'
 else:
     raise ValueError('OS type not supported')
 

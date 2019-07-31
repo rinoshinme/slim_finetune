@@ -134,18 +134,18 @@ if __name__ == '__main__':
     dst_folder = r'E:\DATASET2019\baokong13_20190731'
     # split_images(src_folder, dst_folder, LABEL_MAP)
 
-    # # generate text
-    # train_dir = os.path.join(dst_folder, 'train')
-    # val_dir = os.path.join(dst_folder, 'val')
-    # test_dir = os.path.join(dst_folder, 'test')
-    # train_text = train_dir + '.txt'
-    # val_text = val_dir + '.txt'
-    # test_text = test_dir + '.txt'
-    # # class_names = ['normal', 'army', 'fire', 'terrorflag']
-    # class_names = DST_LABELS
-    # generate_text(train_dir, class_names, train_text)
-    # generate_text(val_dir, class_names, val_text)
-    # generate_text(test_dir, class_names, test_text)
-
+    # generate text
     train_dir = os.path.join(dst_folder, 'train')
-    dataset_augmentation(train_dir)
+    val_dir = os.path.join(dst_folder, 'val')
+    test_dir = os.path.join(dst_folder, 'test')
+    train_text = train_dir + '.txt'
+    val_text = val_dir + '.txt'
+    test_text = test_dir + '.txt'
+    # class_names = ['normal', 'army', 'fire', 'terrorflag']
+    class_names = DST_LABELS
+    generate_text(train_dir, class_names, train_text)
+    generate_text(val_dir, class_names, val_text)
+    generate_text(test_dir, class_names, test_text)
+
+    # train_dir = os.path.join(dst_folder, 'train')
+    # dataset_augmentation(train_dir)
