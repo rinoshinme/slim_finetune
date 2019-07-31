@@ -9,10 +9,10 @@ from nets import dataset_utils
 def load_initial_weights(session, weight_path, train_layers):
     print('Loading parameters')
 
-    # output all graph nodes
-    graph = session.graph
-    for node in graph.as_graph_def().node:
-        print(node.name)
+    # # output all graph nodes
+    # graph = session.graph
+    # for node in graph.as_graph_def().node:
+    #     print(node.name)
 
     reader = pywrap_tensorflow.NewCheckpointReader(weight_path)
     var_to_shape_map = reader.get_variable_to_shape_map()
