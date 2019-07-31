@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints
+data
+logs
+tmp
+public
+.cache
+.env
+.idea/
+.pytest_cache
+*.sqlite3
+test/textures.py
+venv
