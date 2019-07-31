@@ -2,10 +2,36 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9f3c37f4-37dc-44a9-af77-74cbea3e0c61" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dataset/augment_cv2.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/export_tfserving/nsfw_model.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/slim_finetune.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/slim_finetune.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset/augment_transformation.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/augment_transformation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset/generate_dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/generate_dataset.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset/image0.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset/image1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset/image10.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset/image11.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset/image12.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset/image13.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset/image14.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset/image15.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset/image16.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset/image17.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset/image18.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset/image19.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset/image2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset/image3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset/image4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset/image5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset/image6.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset/image7.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset/image8.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset/image9.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/export_tfserving/export_savedmodel.py" beforeDir="false" afterPath="$PROJECT_DIR$/export_tfserving/export_savedmodel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nets/resnet_v1.py" beforeDir="false" afterPath="$PROJECT_DIR$/nets/resnet_v1.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,22 +42,22 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config.py">
+        <entry file="file://$PROJECT_DIR$/export_tfserving/violence_model.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="16" column="51" selection-start-line="16" selection-start-column="47" selection-end-line="16" selection-end-column="51" />
+            <state relative-caret-position="247">
+              <caret line="13" column="20" selection-end-line="61" />
               <folding>
-                <element signature="e#35#50#0" expanded="true" />
+                <element signature="e#0#23#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/export_tfserving/violence_model.py">
+        <entry file="file://$PROJECT_DIR$/export_tfserving/nsfw_model.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="295">
-              <caret line="36" column="62" selection-start-line="36" selection-start-column="58" selection-end-line="36" selection-end-column="62" />
+            <state relative-caret-position="148">
+              <caret line="16" column="3" selection-start-line="16" selection-start-column="3" selection-end-line="16" selection-end-column="3" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
               </folding>
@@ -42,17 +68,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/export_tfserving/image_utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="291">
+            <state relative-caret-position="418">
               <caret line="22" column="16" selection-start-line="22" selection-start-column="11" selection-end-line="22" selection-end-column="16" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/export_tfserving/export_savedmodel.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="284">
-              <caret line="56" column="40" lean-forward="true" selection-start-line="56" selection-start-column="40" selection-end-line="56" selection-end-column="40" />
+            <state relative-caret-position="-4">
+              <caret line="83" column="19" selection-start-line="83" selection-start-column="12" selection-end-line="83" selection-end-column="19" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -60,13 +86,25 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dataset/data_generator.py">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/dataset/generate_dataset.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="18" selection-start-line="18" selection-end-line="18" />
+            <state relative-caret-position="133">
+              <caret line="16" column="67" selection-start-line="16" selection-start-column="52" selection-end-line="16" selection-end-column="67" />
               <folding>
-                <element signature="e#0#18#0" expanded="true" />
+                <element signature="e#144#153#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dataset/augment_cv2.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="418">
+              <caret line="31" lean-forward="true" selection-start-line="31" selection-end-line="31" />
+              <folding>
+                <element signature="e#45#55#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -75,7 +113,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test_metrics.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
+            <state relative-caret-position="310">
               <caret line="30" selection-start-line="30" selection-end-line="30" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
@@ -87,7 +125,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/models/model_factory.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
+            <state relative-caret-position="323">
               <caret line="24" column="21" selection-start-line="24" selection-start-column="16" selection-end-line="24" selection-end-column="28" />
               <folding>
                 <element signature="e#94#137#0" expanded="true" />
@@ -139,7 +177,6 @@
         <option value="$PROJECT_DIR$/models/mobilenet_v2.py" />
         <option value="$PROJECT_DIR$/models/vgg16.py" />
         <option value="$PROJECT_DIR$/dataset/generate_dataset_augmentation.py" />
-        <option value="$PROJECT_DIR$/dataset/augment_transformation.py" />
         <option value="$PROJECT_DIR$/dataset/augment_interpolation.py" />
         <option value="$PROJECT_DIR$/models/resnet_v1_50.py" />
         <option value="$PROJECT_DIR$/models/inception_v3.py" />
@@ -147,13 +184,11 @@
         <option value="$PROJECT_DIR$/models/inception_v4.py" />
         <option value="$PROJECT_DIR$/tools/image_open_problem.py" />
         <option value="$PROJECT_DIR$/violence_api.py" />
-        <option value="$PROJECT_DIR$/nets/resnet_v1.py" />
         <option value="$PROJECT_DIR$/models/resnet_v1_101.py" />
         <option value="$PROJECT_DIR$/trainer.py" />
         <option value="$PROJECT_DIR$/tools/random_tools.py" />
         <option value="$PROJECT_DIR$/tools/search_text.py" />
         <option value="$PROJECT_DIR$/export_tfserving/test_saved_model.py" />
-        <option value="$PROJECT_DIR$/dataset/generate_dataset.py" />
         <option value="$PROJECT_DIR$/dataset/data_generator_test.py" />
         <option value="$PROJECT_DIR$/training_utils.py" />
         <option value="$PROJECT_DIR$/config.py" />
@@ -166,14 +201,19 @@
         <option value="$PROJECT_DIR$/export_tfserving/export_savedmodel2.py" />
         <option value="$PROJECT_DIR$/export_tfserving/violence_model.py" />
         <option value="$PROJECT_DIR$/export_tfserving/image_utils.py" />
+        <option value="$PROJECT_DIR$/export_tfserving/nsfw_model.py" />
         <option value="$PROJECT_DIR$/export_tfserving/export_savedmodel.py" />
+        <option value="$PROJECT_DIR$/nets/resnet_v1.py" />
+        <option value="$PROJECT_DIR$/dataset/augment_transformation.py" />
+        <option value="$PROJECT_DIR$/dataset/augment_cv2.py" />
+        <option value="$PROJECT_DIR$/dataset/generate_dataset.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="23" />
-    <option name="width" value="1440" />
-    <option name="height" value="797" />
+    <option name="x" value="-24" />
+    <option name="width" value="1148" />
+    <option name="height" value="705" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -190,7 +230,7 @@
             <path>
               <item name="slim_finetune" type="b2602c69:ProjectViewProjectNode" />
               <item name="slim_finetune" type="462c0819:PsiDirectoryNode" />
-              <item name="export_tfserving" type="462c0819:PsiDirectoryNode" />
+              <item name="dataset" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -201,7 +241,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../data_tools" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
@@ -216,7 +256,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.export_savedmodel">
+  <component name="RunManager" selected="Python.generate_dataset">
     <configuration name="export_savedmodel" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="slim_finetune" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -259,6 +299,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="generate_dataset" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="slim_finetune" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/dataset" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/dataset/generate_dataset.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="pb_inspect" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="slim_finetune" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -272,27 +333,6 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pb_inspect.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="test_metrics" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="slim_finetune" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test_metrics.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -324,11 +364,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.generate_dataset" />
         <item itemvalue="Python.export_savedmodel" />
         <item itemvalue="Python.export_savedmodel2" />
         <item itemvalue="Python.pb_inspect" />
         <item itemvalue="Python.test_tfserving" />
-        <item itemvalue="Python.test_metrics" />
       </list>
     </recent_temporary>
   </component>
@@ -346,15 +386,15 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="797" extended-state="0" />
+    <frame x="-24" y="0" width="1148" height="705" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13953489" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2117117" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3289689" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4985119" weight="0.24397163" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4985119" visible="true" weight="0.30297723" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -369,26 +409,6 @@
     </layout>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/models/classifier/image_classifier.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Anaconda3/envs/dev3/Lib/random.py" />
-    <entry file="file://$PROJECT_DIR$/nets/mobilenet_v1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1462">
-          <caret line="305" column="4" selection-start-line="305" selection-start-column="4" selection-end-line="305" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/nets/mobilenet/mobilenet_v2.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3662" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/models/densenet_121.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="741">
@@ -399,31 +419,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dataset/dataset_validation.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="22" column="44" selection-start-line="22" selection-start-column="36" selection-end-line="22" selection-end-column="44" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Anaconda3/envs/dev3/Lib/site-packages/tensorflow/python/training/saver.py" />
-    <entry file="file://$PROJECT_DIR$/nets/resnet_utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="233">
-          <caret line="251" column="5" selection-start-line="251" selection-start-column="5" selection-end-line="251" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dataset/augment_transformation.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="377">
-          <caret line="75" column="20" selection-start-line="75" selection-start-column="20" selection-end-line="75" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/models/inception_v3.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="209">
@@ -491,26 +487,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/violence_api.py" />
-    <entry file="file://$PROJECT_DIR$/dataset/augment_interpolation.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="139">
-          <caret line="83" column="23" lean-forward="true" selection-start-line="83" selection-start-column="23" selection-end-line="83" selection-end-column="23" />
-          <folding>
-            <element signature="e#56#66#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dataset/generate_images.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="9" column="94" selection-start-line="9" selection-start-column="94" selection-end-line="9" selection-end-column="94" />
-          <folding>
-            <element signature="e#58#68#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Anaconda3/envs/dev3/Lib/shutil.py" />
     <entry file="file://$PROJECT_DIR$/tools/image_open_problem.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -558,26 +534,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/dataset/image.jpg" />
     <entry file="file://$PROJECT_DIR$/dataset/image0.jpg" />
-    <entry file="file://$PROJECT_DIR$/dataset/data_generator_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="12" column="27" selection-start-line="12" selection-start-column="27" selection-end-line="12" selection-end-column="27" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dataset/generate_dataset.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="87">
-          <caret line="15" column="24" selection-start-line="13" selection-start-column="13" selection-end-line="15" selection-end-column="24" />
-          <folding>
-            <element signature="e#144#153#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Anaconda3/envs/dev3/Lib/site-packages/tensorflow/python/saved_model/signature_def_utils_impl.py" />
     <entry file="file://$USER_HOME$/Anaconda3/envs/dev3/Lib/site-packages/tensorflow/python/saved_model/signature_constants.py" />
     <entry file="file://$PROJECT_DIR$/training_utils.py">
@@ -651,39 +607,12 @@
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/Anaconda3/envs/dev3/Lib/base64.py" />
-    <entry file="file://$PROJECT_DIR$/nets/resnet_v1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="244" column="30" selection-start-line="244" selection-start-column="20" selection-end-line="244" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/export_tfserving/export_savedmodel2.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
           <caret line="29" column="76" lean-forward="true" selection-start-line="29" selection-start-column="76" selection-end-line="29" selection-end-column="76" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="16" column="51" selection-start-line="16" selection-start-column="47" selection-end-line="16" selection-end-column="51" />
-          <folding>
-            <element signature="e#35#50#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/model_factory.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="24" column="21" selection-start-line="24" selection-start-column="16" selection-end-line="24" selection-end-column="28" />
-          <folding>
-            <element signature="e#94#137#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -698,19 +627,124 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dataset/data_generator.py">
+    <entry file="file://$PROJECT_DIR$/config.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" selection-start-line="18" selection-end-line="18" />
+        <state>
+          <caret line="16" column="51" selection-start-line="16" selection-start-column="47" selection-end-line="16" selection-end-column="51" />
           <folding>
-            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#35#50#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/export_tfserving/image_utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="22" column="16" selection-start-line="22" selection-start-column="11" selection-end-line="22" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/model_factory.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="24" column="21" selection-start-line="24" selection-start-column="16" selection-end-line="24" selection-end-column="28" />
+          <folding>
+            <element signature="e#94#137#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/export_tfserving/violence_model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="13" column="20" selection-end-line="61" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/export_tfserving/nsfw_model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="148">
+          <caret line="16" column="3" selection-start-line="16" selection-start-column="3" selection-end-line="16" selection-end-column="3" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nets/inception_v1.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="292">
+          <caret line="295" lean-forward="true" selection-start-line="295" selection-end-line="295" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nets/resnet_v1.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="250" column="47" lean-forward="true" selection-start-line="250" selection-start-column="47" selection-end-line="250" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nets/resnet_utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4351">
+          <caret line="255" column="25" lean-forward="true" selection-start-line="255" selection-start-column="25" selection-end-line="255" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataset/augment_interpolation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1147">
+          <caret line="83" column="23" lean-forward="true" selection-start-line="83" selection-start-column="23" selection-end-line="83" selection-end-column="23" />
+          <folding>
+            <element signature="e#56#66#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataset/generate_images.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-677">
+          <caret line="9" column="94" selection-start-line="9" selection-start-column="94" selection-end-line="9" selection-end-column="94" />
+          <folding>
+            <element signature="e#58#68#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataset/dataset_validation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="22" column="44" selection-start-line="22" selection-start-column="36" selection-end-line="22" selection-end-column="44" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataset/data_generator_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="12" column="27" selection-start-line="12" selection-start-column="27" selection-end-line="12" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataset/augment_transformation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="48" column="86" selection-start-line="41" selection-end-line="48" selection-end-column="86" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test_metrics.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
+        <state relative-caret-position="310">
           <caret line="30" selection-start-line="30" selection-end-line="30" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
@@ -718,29 +752,49 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/export_tfserving/image_utils.py">
+    <entry file="file://$USER_HOME$/Anaconda3/envs/dev3/Lib/random.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="291">
-          <caret line="22" column="16" selection-start-line="22" selection-start-column="11" selection-end-line="22" selection-end-column="16" />
+        <state relative-caret-position="-55">
+          <caret line="262" column="8" selection-start-line="262" selection-start-column="8" selection-end-line="262" selection-end-column="8" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/export_tfserving/violence_model.py">
+    <entry file="file://$PROJECT_DIR$/dataset/data_generator.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="295">
-          <caret line="36" column="62" selection-start-line="36" selection-start-column="58" selection-end-line="36" selection-end-column="62" />
+        <state relative-caret-position="239">
+          <caret line="178" column="38" selection-start-line="178" selection-start-column="23" selection-end-line="178" selection-end-column="38" />
           <folding>
-            <element signature="e#0#23#0" expanded="true" />
+            <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/export_tfserving/export_savedmodel.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="284">
-          <caret line="56" column="40" lean-forward="true" selection-start-line="56" selection-start-column="40" selection-end-line="56" selection-end-column="40" />
+        <state relative-caret-position="-4">
+          <caret line="83" column="19" selection-start-line="83" selection-start-column="12" selection-end-line="83" selection-end-column="19" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataset/augment_cv2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="31" lean-forward="true" selection-start-line="31" selection-end-line="31" />
+          <folding>
+            <element signature="e#45#55#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataset/generate_dataset.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="16" column="67" selection-start-line="16" selection-start-column="52" selection-end-line="16" selection-end-column="67" />
+          <folding>
+            <element signature="e#144#153#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -247,13 +247,13 @@ def resnet_v1(inputs,
                     # ---------------------------------------------------------------
                     # add additional conv layers for model finetuning
                     net = slim.conv2d(net, 2048, [1, 1],
-                            activation_fn=tf.nn.relu, 
-                            normalizer_fn=None, 
+                            activation_fn=tf.nn.relu,
+                            normalizer_fn=None,
                             scope='final_conv1')
                     end_points[sc.name + '/final_conv1'] = net
-                    # net = slim.conv2d(net, 2048, [1, 1], 
-                    #         activation_fn=tf.nn.relu, 
-                    #         normalizer_fn=None, 
+                    # net = slim.conv2d(net, 2048, [1, 1],
+                    #         activation_fn=tf.nn.relu,
+                    #         normalizer_fn=None,
                     #         scope='final_conv2')
                     # end_points[sc.name + '/final_conv2'] = net
                     # --------------------------------------------------------------

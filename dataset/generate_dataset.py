@@ -7,13 +7,19 @@ import os
 import cv2
 import numpy as np
 import random
+import dataset.augment_cv2 as augment_cv2
 
-SRC_LABELS = ['normal', 'riot', 'crash', 'fire',
-              'army', 'terrorism', 'weapon', 'bloody',
-              'protest']
-DST_LABELS = ['normal', 'riot', 'crash', 'fire',
-              'army', 'terrorism', 'weapon', 'bloody',
-              'protest']
+# SRC_LABELS = ['normal', 'riot', 'crash', 'fire',
+#               'army', 'terrorism', 'weapon', 'bloody',
+#                'protest']
+
+SRC_LABELS = ['normal', 'army', 'bloody', 'crash', 'fire', 'identity',
+              'normal_artificial', 'normal_crowd', 'normal_document',
+              'protest', 'riot', 'terrorism', 'weapon']
+# DST_LABELS = ['normal', 'riot', 'crash', 'fire',
+#               'army', 'terrorism', 'weapon', 'bloody',
+#               'protest']
+DST_LABELS = SRC_LABELS
 
 LABEL_MAP = {key: val for (key, val) in zip(SRC_LABELS, DST_LABELS)}
 
@@ -39,7 +45,7 @@ def split_images(src_dir, dst_dir, name_map):
         val_files = files[num_train:num_train + num_val]
         test_files = files[num_train + num_val:]
 
-        # move files into respective folders
+        # copy files into respective folders
         train_folder = os.path.join(dst_dir, 'train', value)
         val_folder = os.path.join(dst_dir, 'val', value)
         test_folder = os.path.join(dst_dir, 'test', value)
@@ -59,8 +65,6 @@ def split_images(src_dir, dst_dir, name_map):
         for f in val_files:
             src_path = os.path.join(sub_folder, f)
             dst_path = os.path.join(val_folder, '%s_%06d.jpg' % (value, idx))
-            # print(src_path)
-            # print(dst_path)
             idx += 1
             # shutil.copyfile(src_path, dst_path)
             # img = cv2.imread(src_path)
@@ -78,13 +82,13 @@ def split_images(src_dir, dst_dir, name_map):
                 cv2.imwrite(dst_path, img)
 
 
-def generate_text(folder, class_names, dst_text, max_files_per_category=5000):
+def generate_text(folder, class_names, dst_text):
     fp = open(dst_text, 'wt')
     for idx, name in enumerate(class_names):
         subfolder = os.path.join(folder, name)
         files = os.listdir(subfolder)
-        if max_files_per_category > 0:
-            files = files[:max_files_per_category]
+        # if len(files) > max_files_per_category and max_files_per_category > 0:
+        #     files = files[:max_files_per_category]
         for f in files:
             filepath = os.path.join(subfolder, f)
             fp.write('%s\t%s\n' % (filepath, idx))
@@ -107,20 +111,41 @@ def generate_text_shuffle(folder, class_names, dst_text):
             fp.write('%s\t%s\n' % (d[0], d[1]))
 
 
+def dataset_augmentation(train_dir, aug_ratio=1.0):
+    for name in SRC_LABELS:
+        # print('processing {}'.format(name))
+        subpath = os.path.join(train_dir, name)
+        files = os.listdir(subpath)
+        num_augs = int(aug_ratio * len(files))
+        aug_files = random.sample(files, num_augs)
+        for idx, f in enumerate(aug_files):
+            print('processing {}: {} / {}'.format(name, idx, num_augs))
+            img = cv2.imread(os.path.join(subpath, f))
+            # do augmentation
+            img = augment_cv2.random_rotate(img)
+            img = augment_cv2.random_channel_mutate(img)
+
+            save_file = os.path.join(subpath, 'aug_%06d.jpg' % idx)
+            cv2.imwrite(save_file, img)
+
+
 if __name__ == '__main__':
-    src_folder = r'D:\data\baokong2'
-    dst_folder = r'F:\DATASET2019\baokong09_20190717'
+    src_folder = r'D:\data\baokong3'
+    dst_folder = r'E:\DATASET2019\baokong13_20190731'
     # split_images(src_folder, dst_folder, LABEL_MAP)
 
-    # generate text
+    # # generate text
+    # train_dir = os.path.join(dst_folder, 'train')
+    # val_dir = os.path.join(dst_folder, 'val')
+    # test_dir = os.path.join(dst_folder, 'test')
+    # train_text = train_dir + '.txt'
+    # val_text = val_dir + '.txt'
+    # test_text = test_dir + '.txt'
+    # # class_names = ['normal', 'army', 'fire', 'terrorflag']
+    # class_names = DST_LABELS
+    # generate_text(train_dir, class_names, train_text)
+    # generate_text(val_dir, class_names, val_text)
+    # generate_text(test_dir, class_names, test_text)
+
     train_dir = os.path.join(dst_folder, 'train')
-    val_dir = os.path.join(dst_folder, 'val')
-    test_dir = os.path.join(dst_folder, 'test')
-    train_text = train_dir + '.txt'
-    val_text = val_dir + '.txt'
-    test_text = test_dir + '.txt'
-    # class_names = ['normal', 'army', 'fire', 'terrorflag']
-    class_names = DST_LABELS
-    generate_text(train_dir, class_names, train_text, max_files_per_category=5000)
-    generate_text(val_dir, class_names, val_text, max_files_per_category=1500)
-    generate_text(test_dir, class_names, test_text, max_files_per_category=1500)
+    dataset_augmentation(train_dir)
