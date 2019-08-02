@@ -9,6 +9,7 @@ from models.resnet_v1_50 import ResNetV1_50
 from models.resnet_v1_101 import ResNetV1_101
 from models.densenet_121 import DenseNet121
 from models.mobilenet_v1 import MobileNetV1
+from models.efficientnet import EfficientNet
 from config import cfg
 
 
@@ -27,7 +28,10 @@ def get_model(model_name):
         model = DenseNet121(num_classes=cfg.NUM_CLASSES, train_layers=cfg.TRAIN_LAYERS)
     elif model_name == 'MobileNetV1':
         model = MobileNetV1(num_classes=cfg.NUM_CLASSES, train_layers=cfg.TRAIN_LAYERS)
+    elif model_name.startswith('efficientnet'):
+        model = EfficientNet(model_name, num_classes=cfg.NUM_CLASSES, train_layers=cfg.TRAIN_LAYERS)
     else:
         raise ValueError('model name not supported')
 
     return model
+

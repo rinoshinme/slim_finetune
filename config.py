@@ -28,11 +28,19 @@ __C.CLASS_NAMES = ['normal', 'army', 'bloody', 'crash', 'fire', 'identity',
 __C.NUM_CLASSES = len(__C.CLASS_NAMES)
 
 # Model Configurations
-__C.MODEL_NAME = 'ResNetV1_101'  # ['InceptionV3/V4', 'VGG16', 'ResNetV1_50/101', 'DenseNet121', 'MOBILENET_V1/V2']
+# ['InceptionV3/V4', 'VGG16', 'ResNetV1_50/101', 'DenseNet121', 'MOBILENET_V1/V2']
+
+__C.MODEL_NAME = 'efficientnet-b0'
 if __C.MODEL_NAME.startswith('Inception'):
     __C.IMAGE_SIZE = 299
+elif __C.MODEL_NAME.startswith('efficientnet'):
+    # each config has different image size
+    from nets.efficientnet.efficientnet_builder import efficientnet_params
+    params = efficientnet_params(__C.MODEL_NAME)
+    __C.IMAGE_SIZE = params[2]
 else:
     __C.IMAGE_SIZE = 224
+
 __C.IMAGE_CHANNELS = 3
 __C.TRAIN_LAYERS = 'DEFAULT'
 
@@ -50,8 +58,8 @@ __C.TRAIN = easydict.EasyDict()
 
 if os_type == 'Windows':
     __C.TRAIN.PRETRAINED_WEIGHT_PATH = r'D:\library\pretrained_models'
-    __C.TRAIN.TRAIN_DATASET_PATH = r'F:\DATASET2019\baokong12_20190703\train.txt'
-    __C.TRAIN.VAL_DATASET_PATH = r'F:\DATASET2019\baokong12_20190703\val.txt'
+    __C.TRAIN.TRAIN_DATASET_PATH = r'E:\DATASET2019\baokong13_20190731\train.txt'
+    __C.TRAIN.VAL_DATASET_PATH = r'E:\DATASET2019\baokong13_20190731\val.txt'
 elif os_type == 'Linux':
     __C.TRAIN.PRETRAINED_WEIGHT_PATH = '/home/deploy/rinoshinme/projects/pretrained_models'
     __C.TRAIN.TRAIN_DATASET_PATH = '/home/deploy/rinoshinme/data/baokong13_20190731/train.txt'
@@ -111,13 +119,15 @@ __C.TEST.DROPOUT_NODE_NAME = None  # 'input/keep_prob'
 if os_type == 'Windows':
     # __C.TEST.TEST_DATASET_PATH = r'D:\data\DATASET2019\baokong12\test.txt'
     # __C.TEST.TEST_DATASET_PATH = r'F:\DATASET2019\baokong12_20190703\test.txt'
-    __C.TEST.TEST_DATASET_PATH = r'F:\DATASET2019\baokong09_20190717\test_weapon.txt'
+    # __C.TEST.TEST_DATASET_PATH = r'F:\DATASET2019\baokong09_20190717\test_weapon.txt'
+    __C.TEST.TEST_DATASET_PATH = r'E:\DATASET2019\baokong13_20190731\test.txt'
     __C.TEST.BATCH_SIZE = 4
     # __C.TEST.CHECKPOINT_PATH = r'D:\projects\output_finetune\ResNetV1_50\20190626_154551\ckpt\model-8000'
     # __C.TEST.CHECKPOINT_PATH = r'F:\output_finetune\ResNetV1_50\20190702_151234\ckpt\model-11000'
     # __C.TEST.CHECKPOINT_PATH = r'F:\output_finetune\ResNetV1_101\20190708_145053\ckpt\model-1000'
     # __C.TEST.CHECKPOINT_PATH = r'F:\output_finetune\ResNetV1_101\20190710_124127\ckpt\model-2000'
-    __C.TEST.CHECKPOINT_PATH = r'F:\output_finetune\ResNetV1_101\20190717_182122\ckpt\model-9000'
+    # __C.TEST.CHECKPOINT_PATH = r'F:\output_finetune\ResNetV1_101\20190717_182122\ckpt\model-9000'
+    __C.TEST.CHECKPOINT_PATH = r'E:\output_finetune\ResNetV1_101\20190731_141654\ckpt\model-3000'
 elif os_type == 'Linux':
     __C.TEST.TEST_DATASET_PATH = '/home/deploy/rinoshinme/data/violence_data/test.txt'
     __C.TEST.BATCH_SIZE = 64

@@ -244,19 +244,19 @@ def resnet_v1(inputs,
                     net = tf.reduce_mean(net, [1, 2], name='pool5', keep_dims=True)
                     end_points['global_pool'] = net
                 if num_classes:
-                    # ---------------------------------------------------------------
-                    # add additional conv layers for model finetuning
-                    net = slim.conv2d(net, 2048, [1, 1],
-                            activation_fn=tf.nn.relu,
-                            normalizer_fn=None,
-                            scope='final_conv1')
-                    end_points[sc.name + '/final_conv1'] = net
+                    # # ---------------------------------------------------------------
+                    # # add additional conv layers for model finetuning
                     # net = slim.conv2d(net, 2048, [1, 1],
                     #         activation_fn=tf.nn.relu,
                     #         normalizer_fn=None,
-                    #         scope='final_conv2')
-                    # end_points[sc.name + '/final_conv2'] = net
-                    # --------------------------------------------------------------
+                    #         scope='final_conv1')
+                    # end_points[sc.name + '/final_conv1'] = net
+                    # # net = slim.conv2d(net, 2048, [1, 1],
+                    # #         activation_fn=tf.nn.relu,
+                    # #         normalizer_fn=None,
+                    # #         scope='final_conv2')
+                    # # end_points[sc.name + '/final_conv2'] = net
+                    # # --------------------------------------------------------------
                     net = slim.conv2d(net,
                                       num_classes,
                                       [1, 1],

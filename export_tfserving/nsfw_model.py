@@ -48,7 +48,6 @@ class NsfwResNetV1L152(object):
             self.load_trained_weights(weight_path)
 
     def load_trained_weights(self, weight_path):
-        self.session.run(tf.global_variables_initializer())
         # load_initial_weights(self.session, weight_path, train_layers=[])
         self.session.run(tf.global_variables_initializer())
         saver = tf.train.Saver(var_list=tf.global_variables())

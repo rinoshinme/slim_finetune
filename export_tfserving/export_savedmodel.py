@@ -60,8 +60,8 @@ if __name__ == "__main__":
     # args = parser.parse_args()
 
     # model = OpenNsfwModel()
-    model = ViolenceModelResNetV1L101(num_classes=9)
-    # model = NsfwResNetV1L152(num_classes=7)
+    # model = ViolenceModelResNetV1L101(num_classes=9)
+    model = NsfwResNetV1L152(num_classes=7)
 
     # parameters
     if os_type == 'Darwin':
@@ -69,9 +69,9 @@ if __name__ == "__main__":
         model_weights = '/Volumes/Elements/output_finetune/ResNetV1_101/20190719_132123/ckpt/model-25000'
         img_path = os.path.expanduser('~/Desktop/fire_002626.jpg')
     elif os_type == 'Windows':
-        export_base_path = r'D:/projects/tfserving/violence/'
-        model_weights = r'F:\output_finetune\ResNetV1_101\20190719_132123\ckpt\model-25000'
-        # model_weights = r'D:\temp\model-150000'
+        export_base_path = r'D:/projects/tfserving/nsfw_new/'
+        # model_weights = r'F:\output_finetune\ResNetV1_101\20190719_132123\ckpt\model-25000'
+        model_weights = r'D:\temp\model-150000'
         img_path = r'D:\data\baokong2\normal\27.jpg'
     else:
         raise ValueError('os_type not supported')

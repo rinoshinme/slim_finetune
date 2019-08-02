@@ -7,8 +7,17 @@ import shutil
 import random
 from models.model_factory import get_model
 from config import cfg
-# cfg = cfg.TEST
+from utils.image import is_image_file
 IMAGE_EXTS = ['.jpg', '.png', '.jpeg', ]
+
+
+args = {
+    'model_name': 'ResNetV1_101',
+    'class_names': [],
+    'num_classes': 13,
+    'image_size': (224, 224),
+
+}
 
 
 class MetricTester(object):
@@ -22,9 +31,9 @@ class MetricTester(object):
 
         self.image_size = cfg.IMAGE_SIZE
 
-        self.input_node_name = cfg.TEST.INPUT_NODE_NAME
-        self.output_node_name = cfg.TEST.OUTPUT_NODE_NAME
-        self.dropout_node_name = cfg.TEST.DROPOUT_NODE_NAME
+        # self.input_node_name = cfg.TEST.INPUT_NODE_NAME
+        # self.output_node_name = cfg.TEST.OUTPUT_NODE_NAME
+        # self.dropout_node_name = cfg.TEST.DROPOUT_NODE_NAME
 
         self.session = tf.Session()
         self.model = self.load_model(ckpt_path)
@@ -191,6 +200,8 @@ class MetricTester(object):
             for name in files:
                 cnt += 1
                 img_path = os.path.join(root, name)
+                if not is_image_file(img_path):
+                    continue
                 # skip detected images
                 print('testing: %06d - %s' % (cnt, img_path))
                 if not any([name.lower().endswith(ext) for ext in IMAGE_EXTS]):
@@ -284,47 +295,51 @@ if __name__ == '__main__':
     # ckpt_path = r'F:\output_finetune\ResNetV1_50\20190701_162648\ckpt\model-20000'
     # ckpt_path = r'F:\output_finetune\ResNetV1_50\20190702_095206\ckpt\model-12000'
     # ckpt_path = r'F:\output_finetune\ResNetV1_101\20190710_124127\ckpt\model-2000'
-    ckpt_path = r'F:\output_finetune\ResNetV1_101\20190719_132123\ckpt\model-25000'
+    # ckpt_path = r'F:\output_finetune\ResNetV1_101\20190719_132123\ckpt\model-25000'
+    ckpt_path = r'E:\output_finetune\ResNetV1_101\20190731_141654\ckpt\model-3000'
+
     tester = MetricTester(ckpt_path)
 
-    other_folder = r'F:\DATASET2019\baokong09_20190717\test\ceshi'
-    other_text = r'F:\DATASET2019\baokong09_20190717\test\ceshi.txt'
+    # 测试未分类数据
+    other_folder = r'D:\data\temp1'
+    other_text = r'D:\data\temp1.txt'
     # tester.test_folder_all(other_folder, other_text)
-    # for th in [99, 98, 97, 96, 95, 90, 80, 70, 60, 50, 40, 30, 20, 10, 0]:
-    #     other_target_folder = r'F:\cn21_cloud_split\{}'.format(th)
-    #     tester.move_files(other_text, other_target_folder, threshold=th/100.0)
+    for th in [99, 98, 97, 96, 95, 90, 80, 70, 60, 50, 40, 30, 20, 10, 0]:
+        other_target_folder = r'D:\data\temp\{}'.format(th)
+        tester.move_files(other_text, other_target_folder, threshold=th/100.0)
 
-    root_dir = r'F:\DATASET2019\baokong09_20190717\test'
+    # # 测试测试集
+    # root_dir = r'E:\DATASET2019\baokong13_20190731\test'
     # # test on images and save results into txt file
-    # for name in tester.class_names[1:]:
+    # for name in tester.class_names:
     #     folder = os.path.join(root_dir, name)
     #     tester.test_folder(folder)
+    #
+    # # calculate metrics
+    # accs, total_acc = tester.calculate_acc(root_dir)
+    # print('accs = ', accs)
+    # print('total acc = ', total_acc)
 
-    # calculate metrics
-    accs, total_acc = tester.calculate_acc(root_dir)
-    print('accs = ', accs)
-    print('total acc = ', total_acc)
-
-    # plot roc curve
-    positive_labels = ['riot', 'crash', 'fire', 'terrorism', 'bloody', 'protest']
-
-    tprs = []
-    fprs = []
-    for i in range(1, 101):
-        thresh = 0.01 * i
-        tp, fp, tn, fn = tester.calculate_acc_binary(root_dir, positive_labels, thresh)
-        tpr = tp * 1.0 / (tp + fn)
-        fpr = fp * 1.0 / (fp + tn)
-        tprs.append(tpr)
-        fprs.append(fpr)
-
-        print('{}: {}, {}'.format(thresh, tpr, fpr))
-
-    plt.plot(fprs, tprs, '.-')
-    plt.xlabel('FP')
-    plt.ylabel('TP')
-    plt.grid()
-    plt.show()
+    # # plot roc curve
+    # positive_labels = ['riot', 'crash', 'fire', 'terrorism', 'bloody', 'protest']
+    #
+    # tprs = []
+    # fprs = []
+    # for i in range(1, 101):
+    #     thresh = 0.01 * i
+    #     tp, fp, tn, fn = tester.calculate_acc_binary(root_dir, positive_labels, thresh)
+    #     tpr = tp * 1.0 / (tp + fn)
+    #     fpr = fp * 1.0 / (fp + tn)
+    #     tprs.append(tpr)
+    #     fprs.append(fpr)
+    #
+    #     print('{}: {}, {}'.format(thresh, tpr, fpr))
+    #
+    # plt.plot(fprs, tprs, '.-')
+    # plt.xlabel('FP')
+    # plt.ylabel('TP')
+    # plt.grid()
+    # plt.show()
 
     # # move detects into separate folders
     # # name = 'army'
