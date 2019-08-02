@@ -27,18 +27,17 @@ class EfficientNet(object):
             self.train_layers = train_layers
 
         with tf.variable_scope('inputs'):
-            # self.inputs = tf.placeholder(tf.float32, [None, self.image_size, self.image_size, 3], name='inputs')
-            # self.normalized_inputs = self.normalize_features(self.inputs,
-            #                                                  model_builder.MEAN_RGB,
-            #                                                  model_builder.STDDEV_RGB)
             self.x_input = tf.placeholder(tf.float32, [None, self.image_size, self.image_size, 3], name='inputs')
+            self.normalized_inputs = self.normalize_features(self.x_input,
+                                                             model_builder.MEAN_RGB,
+                                                             model_builder.STDDEV_RGB)
+            # self.x_input = tf.placeholder(tf.float32, [None, self.image_size, self.image_size, 3], name='inputs')
             self.y_input = tf.placeholder(tf.float32, [None, self.num_classes], name='labels')
             self.learning_rate = tf.placeholder(tf.float32, name="learning_rate")
             self.keep_prob = None
 
-        additional_params = {'num_classes': self.num_classes}
-
         with tf.variable_scope('efficientnet', reuse=tf.AUTO_REUSE):
+            additional_params = {'num_classes': self.num_classes}
             self.logits, _ = model_builder.build_model(
                 # self.normalized_inputs,
                 self.x_input,
@@ -48,12 +47,17 @@ class EfficientNet(object):
                 model_dir='./models'
             )
 
+            # validation
+            additional_params_val = {
+                'num_classes': self.num_classes,
+                'dropout_rate': 1.0,
+            }
             self.logits_val, _ = model_builder.build_model(
                 # self.normalized_inputs,
                 self.x_input,
                 model_name=self.model_name,
                 training=False,
-                override_params=additional_params,
+                override_params=additional_params_val,
                 model_dir=None
             )
 
@@ -73,7 +77,8 @@ class EfficientNet(object):
             else:
                 var_list = [v for v in tf.trainable_variables() if
                             v.name.split('/')[-2] in self.train_layers or
-                            v.name.split('/')[-3] in self.train_layers]
+                            v.name.split('/')[-3] in self.train_layers or
+                            v.name.split('/')[-4] in self.train_layers]
 
             gradients = tf.gradients(self.loss, var_list)
             self.grads_and_vars = list(zip(gradients, var_list))
@@ -115,8 +120,14 @@ class EfficientNet(object):
         # load_initial_weights(session, weight_path, train_layers)
 
         # do efficientnet specific weight loading
+        print('start loading parameters')
         reader = pywrap_tensorflow.NewCheckpointReader(weight_path)
         var_to_shape_map = reader.get_variable_to_shape_map()
+
+        show_node_names = True
+        if show_node_names:
+            for op_name in var_to_shape_map:
+                print(op_name)
 
         for op_name in var_to_shape_map:
             if op_name == 'global_step':

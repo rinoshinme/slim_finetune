@@ -11,10 +11,11 @@ import random
 
 class ImageDataGenerator(object):
     def __init__(self, txt_file, mode, batch_size, num_classes, shuffle=True,
-                 buffer_size=300, img_size=224):
+                 buffer_size=300, img_size=224, model_name=None):
         self.num_classes = num_classes
         print('num_classes = ', self.num_classes)
         self.image_size = img_size
+        self.model_name = model_name
         self.IMAGENET_MEAN = tf.constant([121.55213, 113.84197, 99.5037], dtype=tf.float32)
 
         # self.img_paths is a list of strings
@@ -160,7 +161,11 @@ class ImageDataGenerator(object):
         img_enhance = self._data_augment(img_decode, model_type=self.image_size)
 
         img = tf.image.resize_images(img_enhance, [self.image_size, self.image_size])
-        img_centered = tf.subtract(img, self.IMAGENET_MEAN)
+        if isinstance(self.model_name, str) and self.model_name.startswith('efficientnet'):
+            # efficientnet has its own normalization function.
+            img_centered = img
+        else:
+            img_centered = tf.subtract(img, self.IMAGENET_MEAN)
         return img_centered, one_hot
 
     def _parse_function_inference(self, filename, label):
