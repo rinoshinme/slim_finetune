@@ -19,18 +19,18 @@ cfg = __C
 ###########################################
 # Class Configurations
 # __C.CLASS_NAMES = ['normal', 'riot', 'crash', 'fire', 'army', 'terrorism', 'weapon', 'bloody', 'protest']
-# __C.CLASS_NAMES = ['normal', 'riot', 'crash', 'fire',
-#                    'army', 'terrorism', 'weapon', 'bloody',
-#                    'protest']
-__C.CLASS_NAMES = ['normal', 'army', 'bloody', 'crash', 'fire', 'identity',
-                   'normal_artificial', 'normal_crowd', 'normal_document',
-                   'protest', 'riot', 'terrorism', 'weapon']
+__C.CLASS_NAMES = ['normal', 'riot', 'crash', 'fire',
+                   'army', 'terrorism', 'weapon', 'bloody',
+                   'protest']
+# __C.CLASS_NAMES = ['normal', 'army', 'bloody', 'crash', 'fire', 'identity',
+#                    'normal_artificial', 'normal_crowd', 'normal_document',
+#                    'protest', 'riot', 'terrorism', 'weapon']
 __C.NUM_CLASSES = len(__C.CLASS_NAMES)
 
 # Model Configurations
 # ['InceptionV3/V4', 'VGG16', 'ResNetV1_50/101', 'DenseNet121', 'MOBILENET_V1/V2']
 
-__C.MODEL_NAME = 'efficientnet-b0'
+__C.MODEL_NAME = 'ResNetV1_101'
 if __C.MODEL_NAME.startswith('Inception'):
     __C.IMAGE_SIZE = 299
 elif __C.MODEL_NAME.startswith('efficientnet'):
@@ -120,14 +120,9 @@ if os_type == 'Windows':
     # __C.TEST.TEST_DATASET_PATH = r'D:\data\DATASET2019\baokong12\test.txt'
     # __C.TEST.TEST_DATASET_PATH = r'F:\DATASET2019\baokong12_20190703\test.txt'
     # __C.TEST.TEST_DATASET_PATH = r'F:\DATASET2019\baokong09_20190717\test_weapon.txt'
-    __C.TEST.TEST_DATASET_PATH = r'E:\DATASET2019\baokong13_20190731\test.txt'
-    __C.TEST.BATCH_SIZE = 4
-    # __C.TEST.CHECKPOINT_PATH = r'D:\projects\output_finetune\ResNetV1_50\20190626_154551\ckpt\model-8000'
-    # __C.TEST.CHECKPOINT_PATH = r'F:\output_finetune\ResNetV1_50\20190702_151234\ckpt\model-11000'
-    # __C.TEST.CHECKPOINT_PATH = r'F:\output_finetune\ResNetV1_101\20190708_145053\ckpt\model-1000'
-    # __C.TEST.CHECKPOINT_PATH = r'F:\output_finetune\ResNetV1_101\20190710_124127\ckpt\model-2000'
-    # __C.TEST.CHECKPOINT_PATH = r'F:\output_finetune\ResNetV1_101\20190717_182122\ckpt\model-9000'
-    __C.TEST.CHECKPOINT_PATH = r'E:\output_finetune\ResNetV1_101\20190731_141654\ckpt\model-3000'
+    __C.TEST.TEST_DATASET_PATH = r'E:\DATASET2019\baokong09_20190717\val.txt'
+    __C.TEST.BATCH_SIZE = 1
+    __C.TEST.CHECKPOINT_PATH = r'E:\output_finetune\ResNetV1_101\20190719_132123\ckpt\model-25000'
 elif os_type == 'Linux':
     __C.TEST.TEST_DATASET_PATH = '/home/deploy/rinoshinme/data/violence_data/test.txt'
     __C.TEST.BATCH_SIZE = 64

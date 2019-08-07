@@ -3,11 +3,14 @@ import tensorflow as tf
 import os
 import cv2
 import shutil
+import time
 from tensorflow.python.framework import graph_util
 from models.model_factory import get_model
 from dataset.data_generator import ImageDataGenerator
 from config import cfg
 # cfg = cfg.TEST
+
+os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 
 
 class Tester(object):
@@ -56,10 +59,14 @@ class Tester(object):
         saver.restore(self.session, ckpt_path)
         return model
 
-    def test(self):
+    def test(self, num=None):
         num_batchs_one_validation = int(self.num_test / self.batch_size)
         acc_list = []
-        for i in range(num_batchs_one_validation):
+        if num is None:
+            num = num_batchs_one_validation
+
+        time_start = time.time()
+        for i in range(num):
             print('processing batch %d' % i)
             x_batch_test, y_batch_test = self.session.run(self.next_batch)
 
@@ -75,6 +82,10 @@ class Tester(object):
             print('accuracy = ', accuracy)
 
             acc_list.append(accuracy)
+        time_end = time.time()
+        time_per_sample = (time_end - time_start) * 1.0 / (num * self.batch_size)
+        print('samples_per_sec = {}'.format(1.0 / time_per_sample))
+
         print("accuracy on test dataSet: {}".format(np.mean(acc_list)))
 
     def test_2class(self, csv_file, pos_labels, neg_labels):
@@ -229,7 +240,7 @@ if __name__ == '__main__':
     # - activation_fn
     # - sgd/adam
     tester = Tester()
-    tester.test()
+    tester.test(num=100)
     # tester.save_pb(r'D:/classify.pb')
 
     # do image tests and save result into separate folders

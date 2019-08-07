@@ -295,18 +295,18 @@ if __name__ == '__main__':
     # ckpt_path = r'F:\output_finetune\ResNetV1_50\20190701_162648\ckpt\model-20000'
     # ckpt_path = r'F:\output_finetune\ResNetV1_50\20190702_095206\ckpt\model-12000'
     # ckpt_path = r'F:\output_finetune\ResNetV1_101\20190710_124127\ckpt\model-2000'
-    # ckpt_path = r'F:\output_finetune\ResNetV1_101\20190719_132123\ckpt\model-25000'
-    ckpt_path = r'E:\output_finetune\ResNetV1_101\20190731_141654\ckpt\model-3000'
+    ckpt_path = r'E:\output_finetune\ResNetV1_101\20190719_132123\ckpt\model-25000'
+    # ckpt_path = r'E:\output_finetune\ResNetV1_101\20190731_141654\ckpt\model-3000'
 
     tester = MetricTester(ckpt_path)
 
     # 测试未分类数据
-    other_folder = r'D:\data\temp1'
-    other_text = r'D:\data\temp1.txt'
-    # tester.test_folder_all(other_folder, other_text)
-    for th in [99, 98, 97, 96, 95, 90, 80, 70, 60, 50, 40, 30, 20, 10, 0]:
-        other_target_folder = r'D:\data\temp\{}'.format(th)
-        tester.move_files(other_text, other_target_folder, threshold=th/100.0)
+    other_folder = r'D:\data\21cn_test_data'
+    other_text = r'D:\data\21cn_test_data\result.txt'
+    tester.test_folder_all(other_folder, other_text)
+    # for th in [99, 98, 97, 96, 95, 90, 80, 70, 60, 50, 40, 30, 20, 10, 0]:
+    #     other_target_folder = r'D:\data\temp\{}'.format(th)
+    #     tester.move_files(other_text, other_target_folder, threshold=th/100.0)
 
     # # 测试测试集
     # root_dir = r'E:\DATASET2019\baokong13_20190731\test'

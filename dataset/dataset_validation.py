@@ -1,5 +1,6 @@
 import os
 import cv2
+import shutil
 
 
 def validate_dataset(src_dir, dst_dir, class_names):
@@ -24,8 +25,24 @@ def validate_dataset(src_dir, dst_dir, class_names):
             cv2.imwrite(dst_file, img)
 
 
+def validate_all(src_folder, dst_folder):
+    for root, dirs, files in os.walk(src_folder):
+        target_root = root.replace(src_folder, dst_folder)
+        if not os.path.exists(target_root):
+            os.makedirs(target_root)
+        for f in files:
+            source_path = os.path.join(root, f)
+            img = cv2.imread(source_path)
+            if img is None:
+                continue
+            target_path = os.path.join(target_root, f)
+            # cv2.imwrite(target_path, img)
+            shutil.move(source_path, target_path)
+
+
 if __name__ == '__main__':
-    src_path = r'D:\data\porn_data\porn'
-    dst_path = r'D:\data\porn_data\nsfw5'
-    class_labels = ['drawings', 'hentai', 'neutral', 'porn', 'sexy']
-    validate_dataset(src_path, dst_path, class_labels)
+    src_path = r'D:\data\data_scrawler\temp'
+    dst_path = r'D:\data\data_scrawler\temp1'
+    # class_labels = ['drawings', 'hentai', 'neutral', 'porn', 'sexy']
+    # validate_dataset(src_path, dst_path, class_labels)
+    validate_all(src_path, dst_path)

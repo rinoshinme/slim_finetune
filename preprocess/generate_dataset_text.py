@@ -20,14 +20,15 @@ def generate_text(folder, classnames, target_text, shuffle=False):
 
 
 if __name__ == '__main__':
-    root_dir = r'E:\DATASET2019\baokong13_20190731'
+    root_dir = r'E:\DATASET2019\baokong09_20190717'
     train_dir = os.path.join(root_dir, 'train')
     val_dir = os.path.join(root_dir, 'val')
     test_dir = os.path.join(root_dir, 'test')
 
-    class_names = ['normal', 'army', 'bloody', 'crash', 'fire', 'identity',
-                   'normal_artificial', 'normal_crowd', 'normal_document',
-                   'protest', 'riot', 'terrorism', 'weapon']
+    # class_names = ['normal', 'army', 'bloody', 'crash', 'fire', 'identity',
+    #                'normal_artificial', 'normal_crowd', 'normal_document',
+    #                'protest', 'riot', 'terrorism', 'weapon']
+    class_names = ['normal', 'riot', 'crash', 'fire', 'army', 'terrorism', 'weapon', 'bloody', 'protest']
 
     for d in [train_dir, val_dir, test_dir]:
         generate_text(d, class_names, d + '.txt', shuffle=False)
