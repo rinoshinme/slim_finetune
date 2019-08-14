@@ -26,7 +26,7 @@ from utils.image import cvsafe_imread
 
 
 def split_images(root_dir, target_dir, src_names, dst_names, val_ratio, test_ratio):
-    target_nums = {}
+    target_nums = dict()
     for srcname, dstname in zip(src_names, dst_names):
         print(srcname)
         src_folder = os.path.join(root_dir, srcname)
@@ -80,13 +80,21 @@ def split_images(root_dir, target_dir, src_names, dst_names, val_ratio, test_rat
 
 if __name__ == '__main__':
     srcfolder = r'D:\data\baokong'
-    dstfolder = r'E:\DATASET2019\baokong13_20190731'
+    dstfolder = r'E:\DATASET2019\baokong09_20190814'
 
-    srcnames = ['normal', 'army', 'bloody', 'crash', 'fire', 'identity',
-                'normal_artificial', 'normal_crowd', 'normal_document',
-                'protest', 'riot', 'terrorism', 'weapon']
-    dstnames = ['normal', 'army', 'bloody', 'crash', 'fire', 'identity',
-                'normal_artificial', 'normal_crowd', 'normal_document',
-                'protest', 'riot', 'terrorism', 'weapon']
+    # srcnames = ['normal', 'army', 'bloody', 'crash', 'fire', 'identity',
+    #             'normal_artificial', 'normal_crowd', 'normal_document',
+    #             'protest', 'riot', 'terrorism', 'weapon']
+    # dstnames = ['normal', 'army', 'bloody', 'crash', 'fire', 'identity',
+    #             'normal_artificial', 'normal_crowd', 'normal_document',
+    #             'protest', 'riot', 'terrorism', 'weapon']
+
+    # map multiple categories to normal
+    srcnames = ['14. normal', '9. army', '2. bloody', '7. crash', '5. fire', '6. identity',
+                '13. normal_artificial', '11. normal_multiple_person', '12. normal_document',
+                '4. protest', '3. riot', '1. terrorism', '8. weapon', '10. normal_person123']
+    dstnames = ['normal', 'army', 'bloody', 'crash', 'fire', 'normal',
+                'normal', 'normal', 'normal',
+                'protest', 'riot', 'terrorism', 'weapon', 'normal']
 
     split_images(srcfolder, dstfolder, srcnames, dstnames, val_ratio=0.15, test_ratio=0.15)

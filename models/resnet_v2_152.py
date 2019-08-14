@@ -1,17 +1,17 @@
 import tensorflow as tf
-from nets import resnet_v1
-from models.model_utils import load_initial_weights, get_optimizer, top_softmax_loss
+from nets import resnet_v2
+from models.model_utils import load_initial_weights, get_optimizer
 from tensorflow.contrib.slim import arg_scope
 import os
 from config import cfg
 
-DEFAULT_TRAIN_LAYERS = ['final_conv1', 'logits']
+DEFAULT_TRAIN_LAYERS = ['logits']
 
 
-class ResNetV1_101(object):
+class ResNetV2_152(object):
     def __init__(self, num_classes, train_layers='DEFAULT', weights_path='DEFAULT'):
         if weights_path == 'DEFAULT':
-            self.WEIGHTS_PATH = os.path.join(cfg.TRAIN.PRETRAINED_WEIGHT_PATH, 'resnet_v1_101.ckpt')
+            self.WEIGHTS_PATH = os.path.join(cfg.TRAIN.PRETRAINED_WEIGHT_PATH, 'resnet_v2_152', 'resnet_v2_152.ckpt')
         else:
             self.WEIGHTS_PATH = weights_path
 
@@ -28,17 +28,17 @@ class ResNetV1_101(object):
             self.keep_prob = None
 
         # train
-        with arg_scope(resnet_v1.resnet_arg_scope(activation_fn=cfg.TRAIN.ACTIVATION_FN,
+        with arg_scope(resnet_v2.resnet_arg_scope(activation_fn=cfg.TRAIN.ACTIVATION_FN,
                                                   weight_decay=cfg.TRAIN.WEIGHT_DECAY)):
-            self.logits, _ = resnet_v1.resnet_v1_101(self.x_input,
+            self.logits, _ = resnet_v2.resnet_v2_152(self.x_input,
                                                      num_classes=num_classes,
                                                      is_training=True,
                                                      reuse=tf.AUTO_REUSE)
 
         # validation
-        with arg_scope(resnet_v1.resnet_arg_scope(activation_fn=cfg.TRAIN.ACTIVATION_FN,
+        with arg_scope(resnet_v2.resnet_arg_scope(activation_fn=cfg.TRAIN.ACTIVATION_FN,
                                                   weight_decay=cfg.TRAIN.WEIGHT_DECAY)):
-            self.logits_val, _ = resnet_v1.resnet_v1_101(self.x_input,
+            self.logits_val, _ = resnet_v2.resnet_v2_152(self.x_input,
                                                          num_classes=num_classes,
                                                          is_training=False,
                                                          reuse=tf.AUTO_REUSE)
@@ -48,9 +48,6 @@ class ResNetV1_101(object):
                 tf.nn.softmax_cross_entropy_with_logits_v2(logits=self.logits, labels=self.y_input))
             self.loss_val = tf.reduce_mean(
                 tf.nn.softmax_cross_entropy_with_logits_v2(logits=self.logits_val, labels=self.y_input))
-
-            # self.loss = top_softmax_loss(self.logits, self.y_input, alpha=1.0)
-            # self.loss_val = top_softmax_loss(self.logits_val, self.y_input, alpha=1.0)
 
         with tf.name_scope("train"):
             self.global_step = tf.Variable(0, name="global_step", trainable=False)

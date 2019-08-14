@@ -30,6 +30,7 @@ __C.NUM_CLASSES = len(__C.CLASS_NAMES)
 # Model Configurations
 # ['InceptionV3/V4', 'VGG16', 'ResNetV1_50/101', 'DenseNet121', 'MOBILENET_V1/V2']
 
+# __C.MODEL_NAME = 'efficientnet-b1'
 __C.MODEL_NAME = 'ResNetV1_101'
 if __C.MODEL_NAME.startswith('Inception'):
     __C.IMAGE_SIZE = 299
@@ -58,10 +59,14 @@ __C.TRAIN = easydict.EasyDict()
 
 if os_type == 'Windows':
     __C.TRAIN.PRETRAINED_WEIGHT_PATH = r'D:\library\pretrained_models'
+    __C.TRAIN.TRAINED_CKPT_PATH = \
+        r'E:\output_finetune\efficientnet-b0\20190807_175801\ckpt\model-10000'
     __C.TRAIN.TRAIN_DATASET_PATH = r'E:\DATASET2019\baokong13_20190731\train.txt'
     __C.TRAIN.VAL_DATASET_PATH = r'E:\DATASET2019\baokong13_20190731\val.txt'
 elif os_type == 'Linux':
     __C.TRAIN.PRETRAINED_WEIGHT_PATH = '/home/deploy/rinoshinme/projects/pretrained_models'
+    __C.TRAIN.TRAINED_CKPT_PATH = \
+        '/home/deploy/rinoshinme/projects/output_finetune/efficientnet-b0/20190807_175801/ckpt/model-10000'
     __C.TRAIN.TRAIN_DATASET_PATH = '/home/deploy/rinoshinme/data/baokong13_20190731/train.txt'
     __C.TRAIN.VAL_DATASET_PATH = '/home/deploy/rinoshinme/data/baokong13_20190731/val.txt'
 else:
@@ -75,8 +80,8 @@ else:
     raise ValueError('OS type not supported')
 
 # Please see log history to choose apporpriate lr steps
-__C.TRAIN.LEARNING_RATE = 0.0001
-__C.TRAIN.LEARNING_RATE_POLICY = 'multisteps'  # [fixed, step, exp, inv, multisteps, poly]
+__C.TRAIN.LEARNING_RATE = 0.00002
+__C.TRAIN.LEARNING_RATE_POLICY = 'fixed'  # [fixed, step, exp, inv, multisteps, poly]
 __C.TRAIN.LEARNING_RATE_DECAY = 0.2
 __C.TRAIN.LEARNING_RATE_STEPVALUES = [7000, 13000, 18000]
 __C.TRAIN.LEARNING_RATE_STEP = 10000
@@ -107,7 +112,7 @@ __C.TEST.CLASS_NAMES = ['normal', 'riot', 'crash', 'fire', 'army', 'terrorism', 
 __C.TEST.NUM_CLASSES = len(__C.CLASS_NAMES)
 
 # Model Configurations
-__C.TEST.MODEL_NAME = 'ResNetV1_101'
+__C.TEST.MODEL_NAME = 'efficientnet-b1'
 __C.TEST.IMAGE_SIZE = 224
 __C.TEST.IMAGE_CHANNELS = 3
 
@@ -122,7 +127,9 @@ if os_type == 'Windows':
     # __C.TEST.TEST_DATASET_PATH = r'F:\DATASET2019\baokong09_20190717\test_weapon.txt'
     __C.TEST.TEST_DATASET_PATH = r'E:\DATASET2019\baokong09_20190717\val.txt'
     __C.TEST.BATCH_SIZE = 1
-    __C.TEST.CHECKPOINT_PATH = r'E:\output_finetune\ResNetV1_101\20190719_132123\ckpt\model-25000'
+    # __C.TEST.CHECKPOINT_PATH = r'E:\output_finetune\ResNetV1_101\20190719_132123\ckpt\model-25000'
+    # __C.TEST.CHECKPOINT_PATH = r'E:\output_finetune\efficientnet-b0\20190808_083523\ckpt\model-13000'
+    __C.TEST.CHECKPOINT_PATH = r'E:\output_finetune\efficientnet-b1\20190809_163814\ckpt\model-28000'
 elif os_type == 'Linux':
     __C.TEST.TEST_DATASET_PATH = '/home/deploy/rinoshinme/data/violence_data/test.txt'
     __C.TEST.BATCH_SIZE = 64

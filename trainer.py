@@ -3,7 +3,7 @@ from datetime import datetime
 import os
 import numpy as np
 from models.model_factory import get_model
-# from training_utils import get_learning_rate
+from training_utils import get_learning_rate
 from dataset.data_generator import ImageDataGenerator
 from config import cfg
 import sys
@@ -47,7 +47,10 @@ class Trainer(object):
     def load_model():
         # initialize model
         model_name = cfg.MODEL_NAME
-        model = get_model(model_name)
+        num_classes = cfg.NUM_CLASSES
+        train_layers = cfg.TRAIN_LAYERS
+
+        model = get_model(model_name, num_classes, train_layers)
         return model, model_name
 
     def train(self):
@@ -67,12 +70,14 @@ class Trainer(object):
                     sparsity_summary = tf.summary.scalar("{}/grad/sparsity".format(v.name), tf.nn.zero_fraction(g))
                     grad_summaries.append(grad_hist_summary)
                     grad_summaries.append(sparsity_summary)
-            grad_summaries_merged = tf.summary.merge(grad_summaries)
+
+            # grad_summaries_merged = tf.summary.merge(grad_summaries)
             loss_summary = tf.summary.scalar("loss", self.model.loss)
             acc_summary = tf.summary.scalar("accuracy", self.model.accuracy)
 
             # merge all the train summary
-            train_summary_merged = tf.summary.merge([loss_summary, acc_summary, grad_summaries_merged])
+            # train_summary_merged = tf.summary.merge([loss_summary, acc_summary, grad_summaries_merged])
+            train_summary_merged = tf.summary.merge([loss_summary, acc_summary])  # ignore grad summaries.
             train_summary_writer = tf.summary.FileWriter(os.path.join(out_dir, "summaries", "train"), graph=sess.graph)
             # merge all the dev summary
             val_summary_merged = tf.summary.merge([loss_summary, acc_summary])
@@ -87,6 +92,7 @@ class Trainer(object):
 
             sess.run(tf.global_variables_initializer())
             self.model.load_initial_weights(sess)
+            # self.model.load_trained_weights(sess, cfg_train.TRAINED_CKPT_PATH)
 
             # start training
             current_lr = cfg_train.LEARNING_RATE
@@ -95,11 +101,11 @@ class Trainer(object):
                 current_step = tf.train.global_step(sess, self.model.global_step)
 
                 # decay learn rate when hit a step point
-                if current_step in cfg_train.LEARNING_RATE_STEPVALUES:
-                    current_lr = current_lr * cfg_train.LEARNING_RATE_DECAY
-                    print('changed lr to {}'.format(current_lr))
+                # if current_step in cfg_train.LEARNING_RATE_STEPVALUES:
+                #     current_lr = current_lr * cfg_train.LEARNING_RATE_DECAY
+                #     print('changed lr to {}'.format(current_lr))
 
-                # current_lr = get_learning_rate(cfg_train, current_step)
+                current_lr = get_learning_rate(cfg_train, current_step)
 
                 # train loop
                 x_batch_train, y_batch_train = sess.run(self.train_next_batch)
@@ -175,17 +181,6 @@ class Trainer(object):
 
     @staticmethod
     def write_training_options(cfg_train, file=None):
-        # if file is not None:
-        #     fp = open(file, 'w')
-        # else:
-        #     fp = sys.stdout
-        # fd = fp.fileno()
-        # os.write(fd, b'***')
-        # os.write(fd, b'---')
-        #
-        # if file is not None:
-        #     fp.close()
-
         stdout = sys.stdout
         if file is not None:
             sys.stdout = open(file, 'w')

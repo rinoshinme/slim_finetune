@@ -91,4 +91,11 @@ def get_optimizer(opt_name, learn_rate):
     return optimizer
 
 
+def top_softmax_loss(logits, y_input, alpha=1.0):
+    loss_softmax = tf.nn.softmax_cross_entropy_with_logits_v2(logits=logits, labels=y_input)
+    softmax_res = tf.nn.softmax(logits)
 
+    # make top prob as close to 1 as possible
+    loss_top = 1.0 - tf.reduce_max(softmax_res, reduction_indices=[1])
+    loss_top = tf.square(loss_top)
+    return tf.reduce_mean(loss_softmax + alpha * loss_top, reduction_indices=[0])

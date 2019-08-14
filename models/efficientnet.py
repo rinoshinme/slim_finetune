@@ -6,8 +6,9 @@ from config import cfg
 # from models.model_utils import load_initial_weights
 import nets.efficientnet.efficientnet_builder as model_builder
 
-# DEFAULT_TRAIN_LAYERS = ['blocks15', 'head']
-DEFAULT_TRAIN_LAYERS = ['head']
+DEFAULT_TRAIN_LAYERS_B0 = ['blocks_15', 'head']  # efficientnet-b0
+DEFAULT_TRAIN_LAYERS_B5 = ['blocks_38', 'head']  # efficientnet-b5
+DEFAULT_TRAIN_LAYERS_B1 = ['blocks_22', 'head']  # efficientnet-b1
 
 
 class EfficientNet(object):
@@ -22,7 +23,14 @@ class EfficientNet(object):
             self.WEIGHTS_PATH = weights_path
 
         if train_layers == 'DEFAULT':
-            self.train_layers = DEFAULT_TRAIN_LAYERS
+            if self.model_name.endswith('b0'):
+                self.train_layers = DEFAULT_TRAIN_LAYERS_B0
+            elif self.model_name.endswith('b5'):
+                self.train_layers = DEFAULT_TRAIN_LAYERS_B5
+            elif self.model_name.endswith('b1'):
+                self.train_layers = DEFAULT_TRAIN_LAYERS_B1
+            else:
+                raise ValueError('model name is not supported')
         else:
             self.train_layers = train_layers
 
@@ -34,10 +42,12 @@ class EfficientNet(object):
             # self.x_input = tf.placeholder(tf.float32, [None, self.image_size, self.image_size, 3], name='inputs')
             self.y_input = tf.placeholder(tf.float32, [None, self.num_classes], name='labels')
             self.learning_rate = tf.placeholder(tf.float32, name="learning_rate")
-            self.keep_prob = None
+            self.keep_prob = None  # not used in this model
 
         with tf.variable_scope('efficientnet', reuse=tf.AUTO_REUSE):
-            additional_params = {'num_classes': self.num_classes}
+            additional_params = {
+                'num_classes': self.num_classes,
+            }
             self.logits, _ = model_builder.build_model(
                 # self.normalized_inputs,
                 self.x_input,
@@ -108,6 +118,12 @@ class EfficientNet(object):
         features /= tf.constant(stddev_rgb, shape=stats_shape, dtype=features.dtype)
         return features
 
+    @staticmethod
+    def load_trained_weights(session, ckpt_path):
+        session.run(tf.global_variables_initializer())
+        saver = tf.train.Saver(var_list=tf.global_variables())
+        saver.restore(session, ckpt_path)
+
     def load_initial_weights(self, session, weight_path=None, train_layers=None):
         # session.run(tf.global_variables_initializer())
         # saver = tf.train.Saver(var_list=tf.global_variables())
@@ -115,7 +131,9 @@ class EfficientNet(object):
         if weight_path is None:
             weight_path = self.WEIGHTS_PATH
         if train_layers is None:
-            train_layers = self.train_layers
+            # train_layers = self.train_layers
+            # load all pretrained weights.
+            train_layers = []
 
         # load_initial_weights(session, weight_path, train_layers)
 

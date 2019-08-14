@@ -5,13 +5,13 @@ from tensorflow.contrib.slim import arg_scope
 import os
 from config import cfg
 
-DEFAULT_TRAIN_LAYERS = ['final_conv1', 'logits']
+DEFAULT_TRAIN_LAYERS = ['final_conv', 'logits']
 
 
-class ResNetV1_101(object):
+class ResNetV1_152(object):
     def __init__(self, num_classes, train_layers='DEFAULT', weights_path='DEFAULT'):
         if weights_path == 'DEFAULT':
-            self.WEIGHTS_PATH = os.path.join(cfg.TRAIN.PRETRAINED_WEIGHT_PATH, 'resnet_v1_101.ckpt')
+            self.WEIGHTS_PATH = os.path.join(cfg.TRAIN.PRETRAINED_WEIGHT_PATH, 'resnet_v1_152.ckpt')
         else:
             self.WEIGHTS_PATH = weights_path
 
@@ -30,7 +30,7 @@ class ResNetV1_101(object):
         # train
         with arg_scope(resnet_v1.resnet_arg_scope(activation_fn=cfg.TRAIN.ACTIVATION_FN,
                                                   weight_decay=cfg.TRAIN.WEIGHT_DECAY)):
-            self.logits, _ = resnet_v1.resnet_v1_101(self.x_input,
+            self.logits, _ = resnet_v1.resnet_v1_152(self.x_input,
                                                      num_classes=num_classes,
                                                      is_training=True,
                                                      reuse=tf.AUTO_REUSE)
@@ -38,7 +38,7 @@ class ResNetV1_101(object):
         # validation
         with arg_scope(resnet_v1.resnet_arg_scope(activation_fn=cfg.TRAIN.ACTIVATION_FN,
                                                   weight_decay=cfg.TRAIN.WEIGHT_DECAY)):
-            self.logits_val, _ = resnet_v1.resnet_v1_101(self.x_input,
+            self.logits_val, _ = resnet_v1.resnet_v1_152(self.x_input,
                                                          num_classes=num_classes,
                                                          is_training=False,
                                                          reuse=tf.AUTO_REUSE)
