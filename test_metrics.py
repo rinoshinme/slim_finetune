@@ -203,7 +203,7 @@ class MetricTester(object):
                 if not is_image_file(img_path):
                     continue
                 # skip detected images
-                print('testing: %06d - %s' % (cnt, img_path))
+                # print('testing: %06d - %s' % (cnt, img_path))
                 if not any([name.lower().endswith(ext) for ext in IMAGE_EXTS]):
                     continue
                 try:
@@ -245,6 +245,8 @@ class MetricTester(object):
                     softmax_results = np.squeeze(softmax_results, axis=0)
 
                     probs = [float(softmax_results[i]) for i in range(self.num_classes)]
+                    violence_index = sum([probs[k] for k in [1, 2, 3, 5, 7, 8]])
+                    print('testing %d - %s: %.6f' % (cnt, img_path, violence_index))
 
                     prob_values = [str(probs[i]) for i in range(self.num_classes)]
                     prob_text = ','.join(prob_values)
@@ -292,19 +294,27 @@ class MetricTester(object):
 
 
 if __name__ == '__main__':
-    ckpt_path = r'E:\output_finetune\ResNetV1_101\20190719_132123\ckpt\model-25000'
+    # ckpt_path = r'E:\output_finetune\ResNetV1_101\20190719_132123\ckpt\model-25000'
+    ckpt_path = r'D:\temp\ResNetV1_101_20190719_132123\ckpt\model-25000'
     # ckpt_path = r'E:\output_finetune\efficientnet-b0\20190808_083523\ckpt\model-13000'
     # ckpt_path = r'E:\output_finetune\efficientnet-b1\20190809_163814\ckpt\model-28000'
 
     tester = MetricTester(ckpt_path)
 
     # 测试未分类数据
-    other_folder = r'D:\data\21cn_test_data2'
-    other_text = r'D:\data\21cn_test_data2\result.txt'
-    tester.test_folder_all(other_folder, other_text)
-    # for th in [99, 98, 97, 96, 95, 90, 80, 70, 60, 50, 40, 30, 20, 10, 0]:
-    #     other_target_folder = r'D:\data\temp\{}'.format(th)
-    #     tester.move_files(other_text, other_target_folder, threshold=th/100.0)
+    # other_folder = r'D:\data\frames'
+    # other_text = r'D:\data\frames.txt'
+    # tester.test_folder_all(other_folder, other_text)
+    # other_folder2 = r'D:\data\update'
+    # other_text2 = r'D:\data\update2.txt'
+    # tester.test_folder_all(other_folder2, other_text2)
+    other_folder3 = r'D:\data\baokong\Bad暴乱游行'
+    other_text3 = r'D:\data\baokong\Bad暴乱游行.txt'
+    # tester.test_folder_all(other_folder3, other_text3)
+
+    for th in [90, 50]:
+        other_target_folder = r'D:\data\baokong\split\{}'.format(th)
+        tester.move_files(other_text3, other_target_folder, threshold=th/100.0)
 
     # # 测试测试集
     # root_dir = r'E:\DATASET2019\baokong13_20190731\test'

@@ -11,7 +11,7 @@ import sys
 cfg_train = cfg.TRAIN
 cfg_test = cfg.TEST
 
-os.environ['CUDA_VISIBLE_DEVICES'] = '3'
+os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 
 
 class Trainer(object):

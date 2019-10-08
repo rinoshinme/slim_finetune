@@ -13,25 +13,23 @@ cfg = __C
 
 # POSSIBLE MODIFICAITON NEEDED FOR NEW TRAINING
 # 1. CLASS_NAMES
+# 2.0 GENERATE DATA TEXT
 # 2. DATASET_PATH
 # 3. MODEL_NAME
 
 ###########################################
 # Class Configurations
 # __C.CLASS_NAMES = ['normal', 'riot', 'crash', 'fire', 'army', 'terrorism', 'weapon', 'bloody', 'protest']
-__C.CLASS_NAMES = ['normal', 'riot', 'crash', 'fire',
-                   'army', 'terrorism', 'weapon', 'bloody',
-                   'protest']
-# __C.CLASS_NAMES = ['normal', 'army', 'bloody', 'crash', 'fire', 'identity',
-#                    'normal_artificial', 'normal_crowd', 'normal_document',
-#                    'protest', 'riot', 'terrorism', 'weapon']
+# __C.CLASS_NAMES = ['normal', 'army', 'bloody', 'crash', 'fire', 'identity', 'normal_artificial', 'normal_crowd',
+#                    'normal_document', 'protest', 'riot', 'terrorism', 'weapon']
+__C.CLASS_NAMES = ['hat_on', 'hat_off', 'other']
 __C.NUM_CLASSES = len(__C.CLASS_NAMES)
 
 # Model Configurations
 # ['InceptionV3/V4', 'VGG16', 'ResNetV1_50/101', 'DenseNet121', 'MOBILENET_V1/V2']
 
 # __C.MODEL_NAME = 'efficientnet-b1'
-__C.MODEL_NAME = 'ResNetV1_101'
+__C.MODEL_NAME = 'ResNetV1_50'
 if __C.MODEL_NAME.startswith('Inception'):
     __C.IMAGE_SIZE = 299
 elif __C.MODEL_NAME.startswith('efficientnet'):
@@ -58,11 +56,11 @@ else:
 __C.TRAIN = easydict.EasyDict()
 
 if os_type == 'Windows':
-    __C.TRAIN.PRETRAINED_WEIGHT_PATH = r'D:\library\pretrained_models'
-    __C.TRAIN.TRAINED_CKPT_PATH = \
-        r'E:\output_finetune\efficientnet-b0\20190807_175801\ckpt\model-10000'
-    __C.TRAIN.TRAIN_DATASET_PATH = r'E:\DATASET2019\baokong13_20190731\train.txt'
-    __C.TRAIN.VAL_DATASET_PATH = r'E:\DATASET2019\baokong13_20190731\val.txt'
+    __C.TRAIN.PRETRAINED_WEIGHT_PATH = r'D:\code\tools\pretrained_models'
+    # for continue model training.
+    __C.TRAIN.TRAINED_CKPT_PATH = r'E:\output_finetune\efficientnet-b0\20190807_175801\ckpt\model-10000'
+    __C.TRAIN.TRAIN_DATASET_PATH = r'E:\DATASET2019\safetyhat_20190919\train.txt'
+    __C.TRAIN.VAL_DATASET_PATH = r'E:\DATASET2019\safetyhat_20190919\val.txt'
 elif os_type == 'Linux':
     __C.TRAIN.PRETRAINED_WEIGHT_PATH = '/home/deploy/rinoshinme/projects/pretrained_models'
     __C.TRAIN.TRAINED_CKPT_PATH = \
@@ -74,8 +72,10 @@ else:
 
 if os_type == 'Windows':
     __C.TRAIN.BATCH_SIZE = 4
+    __C.TRAIN.VALIDATION_SIZE = 100
 elif os_type == 'Linux':
     __C.TRAIN.BATCH_SIZE = 128
+    __C.TRAIN.VALIDATION_SIZE = 128 * 30
 else:
     raise ValueError('OS type not supported')
 
@@ -93,8 +93,6 @@ __C.TRAIN.WEIGHT_DECAY = 0.001
 __C.TRAIN.OPTIMIZER = 'adam'  # ['sgd', 'adam', 'moment']
 __C.TRAIN.ACTIVATION_FN = tf.nn.relu  # tf.nn.learky_relu, tf.nn.elu
 
-__C.TRAIN.VALIDATION_SIZE = 3000
-
 # __C.TRAIN.NUM_EPOCHS = 50
 __C.TRAIN.DISPLAY_STEP = 10
 __C.TRAIN.EVALUATE_STEP = 100
@@ -106,18 +104,20 @@ __C.TRAIN.MAX_STEP = 30000
 # Test Configurations
 
 __C.TEST = easydict.EasyDict()
+__C.TEST.CLASS_NAMES = ['normal', 'riot', 'crash', 'fire', 'army', 'terrorism', 'weapon', 'bloody', 'protest']
 # __C.TEST.CLASS_NAMES = ['normal', 'bloody', 'terrorism', 'bomb', 'weapon', 'army']
-__C.TEST.CLASS_NAMES = ['normal', 'riot', 'crash', 'fire', 'army', 'terrorism', 'weapon', 'bloody',
-                        'protest', 'falungong', 'terrorflag', 'privacy']
+# __C.TEST.CLASS_NAMES = ['normal', 'riot', 'crash', 'fire', 'army', 'terrorism', 'weapon', 'bloody',
+#                         'protest', 'falungong', 'terrorflag', 'privacy']
+# __C.TEST.CLASS_NAMES = ['hat_on', 'hat_off', 'other']
 __C.TEST.NUM_CLASSES = len(__C.CLASS_NAMES)
 
 # Model Configurations
-__C.TEST.MODEL_NAME = 'efficientnet-b1'
+__C.TEST.MODEL_NAME = 'ResNetV1_50'
 __C.TEST.IMAGE_SIZE = 224
 __C.TEST.IMAGE_CHANNELS = 3
 
 __C.TEST.INPUT_NODE_NAME = 'input/x_input'
-__C.TEST.OUTPUT_NODE_NAME = 'resnet_v1_101_1/predictions/Softmax'
+__C.TEST.OUTPUT_NODE_NAME = 'resnet_v1_50_1/predictions/Softmax'
 __C.TEST.DROPOUT_NODE_NAME = None  # 'input/keep_prob'
 
 # TEST DATASET
@@ -129,7 +129,8 @@ if os_type == 'Windows':
     __C.TEST.BATCH_SIZE = 1
     # __C.TEST.CHECKPOINT_PATH = r'E:\output_finetune\ResNetV1_101\20190719_132123\ckpt\model-25000'
     # __C.TEST.CHECKPOINT_PATH = r'E:\output_finetune\efficientnet-b0\20190808_083523\ckpt\model-13000'
-    __C.TEST.CHECKPOINT_PATH = r'E:\output_finetune\efficientnet-b1\20190809_163814\ckpt\model-28000'
+    # __C.TEST.CHECKPOINT_PATH = r'E:\output_finetune\efficientnet-b1\20190809_163814\ckpt\model-28000'
+    __C.TEST.CHECKPOINT_PATH = r'D:\projects\output_finetune\ResNetV1_50\20190920_073259\ckpt\model-10000'
 elif os_type == 'Linux':
     __C.TEST.TEST_DATASET_PATH = '/home/deploy/rinoshinme/data/violence_data/test.txt'
     __C.TEST.BATCH_SIZE = 64

@@ -13,13 +13,18 @@ import dataset.augment_cv2 as augment_cv2
 #               'army', 'terrorism', 'weapon', 'bloody',
 #                'protest']
 
-SRC_LABELS = ['normal', 'army', 'bloody', 'crash', 'fire', 'identity',
-              'normal_artificial', 'normal_crowd', 'normal_document',
-              'protest', 'riot', 'terrorism', 'weapon']
+# SRC_LABELS = ['hat_on',
+#               'hat_off',
+#               'other']
+
+SRC_LABELS = ['正常', '正常动漫', 'frames正常动漫', '血腥', '血腥动漫', 'frames血腥动漫']
+DST_LABELS = ['normal', 'anime', 'anime', 'bloody', 'bloody_anime', 'bloody_anime']
+
 # DST_LABELS = ['normal', 'riot', 'crash', 'fire',
 #               'army', 'terrorism', 'weapon', 'bloody',
 #               'protest']
-DST_LABELS = SRC_LABELS
+
+# DST_LABELS = SRC_LABELS
 
 LABEL_MAP = {key: val for (key, val) in zip(SRC_LABELS, DST_LABELS)}
 
@@ -130,22 +135,21 @@ def dataset_augmentation(train_dir, aug_ratio=1.0):
 
 
 if __name__ == '__main__':
-    src_folder = r'D:\data\baokong3'
-    dst_folder = r'E:\DATASET2019\baokong13_20190731'
-    # split_images(src_folder, dst_folder, LABEL_MAP)
+    # src_folder = r'D:\data\baokong3'
+    # dst_folder = r'E:\DATASET2019\baokong13_20190731'
+    # src_folder = r'D:\data\surveillance\safety_gear_classify'
+    src_folder = r'D:\data\21cn_baokong'
+    dst_folder = r'E:\DATASET2019\bloody4_20190926'
+    split_images(src_folder, dst_folder, LABEL_MAP)
 
-    # generate text
-    train_dir = os.path.join(dst_folder, 'train')
-    val_dir = os.path.join(dst_folder, 'val')
-    test_dir = os.path.join(dst_folder, 'test')
-    train_text = train_dir + '.txt'
-    val_text = val_dir + '.txt'
-    test_text = test_dir + '.txt'
-    # class_names = ['normal', 'army', 'fire', 'terrorflag']
-    class_names = DST_LABELS
-    generate_text(train_dir, class_names, train_text)
-    generate_text(val_dir, class_names, val_text)
-    generate_text(test_dir, class_names, test_text)
-
+    # # generate text
     # train_dir = os.path.join(dst_folder, 'train')
-    # dataset_augmentation(train_dir)
+    # val_dir = os.path.join(dst_folder, 'val')
+    # test_dir = os.path.join(dst_folder, 'test')
+    # train_text = train_dir + '.txt'
+    # val_text = val_dir + '.txt'
+    # test_text = test_dir + '.txt'
+    # class_names = DST_LABELS
+    # generate_text(train_dir, class_names, train_text)
+    # generate_text(val_dir, class_names, val_text)
+    # generate_text(test_dir, class_names, test_text)

@@ -14,7 +14,7 @@ os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 
 
 class Tester(object):
-    def __init__(self):
+    def __init__(self, load_data=True, load_model=True):
         self.model_name = cfg.MODEL_NAME
         self.class_names = cfg.CLASS_NAMES
         self.num_classes = cfg.NUM_CLASSES
@@ -23,21 +23,23 @@ class Tester(object):
         # test configurations
         self.test_data_path = cfg.TEST.TEST_DATASET_PATH
         self.batch_size = cfg.TEST.BATCH_SIZE
-        # load data
-        self.test_set, self.next_batch = self.load_dataset()
+        if load_data:
+            # load data
+            self.test_set, self.next_batch = self.load_dataset()
 
-        self.num_test = cfg.TEST.NUM_TEST
-        if self.num_test == 0:
-            self.num_test = self.test_set.data_size
+            self.num_test = cfg.TEST.NUM_TEST
+            if self.num_test == 0:
+                self.num_test = self.test_set.data_size
 
-        self.input_node_name = cfg.TEST.INPUT_NODE_NAME
-        self.output_node_name = cfg.TEST.OUTPUT_NODE_NAME
-        self.dropout_node_name = cfg.TEST.DROPOUT_NODE_NAME
+        if load_model:
+            self.input_node_name = cfg.TEST.INPUT_NODE_NAME
+            self.output_node_name = cfg.TEST.OUTPUT_NODE_NAME
+            self.dropout_node_name = cfg.TEST.DROPOUT_NODE_NAME
 
-        # load model
-        self.session = tf.Session()
-        ckpt_path = cfg.TEST.CHECKPOINT_PATH
-        self.model = self.load_model(ckpt_path)
+            # load model
+            self.session = tf.Session()
+            ckpt_path = cfg.TEST.CHECKPOINT_PATH
+            self.model = self.load_model(ckpt_path)
 
     def load_dataset(self):
         print('loading data')
@@ -239,9 +241,9 @@ if __name__ == '__main__':
     # the configuration used in the training
     # - activation_fn
     # - sgd/adam
-    tester = Tester()
-    tester.test(num=100)
-    # tester.save_pb(r'D:/classify.pb')
+    tester = Tester(load_data=False)
+    # tester.test(num=100)
+    tester.save_pb(r'D:/resnetv1_50_safety_hat.pb')
 
     # do image tests and save result into separate folders
     # name = 'army'

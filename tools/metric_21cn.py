@@ -181,8 +181,8 @@ def find_miss_detection(text_file):
 
 
 if __name__ == '__main__':
-    # txt = r'D:\data\21cn_test_data2\result.txt'
+    # txt = r'D:\data\21cn_test_data2\result_new.txt'
     # test_curve2(txt)
 
-    txt = r'D:\data\21cn_test_data\result.txt'
+    txt = r'D:\data\21cn_test_data\result_new.txt'
     test_curve(txt)
