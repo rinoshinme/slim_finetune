@@ -3,29 +3,23 @@ import tensorflow as tf
 import os
 import cv2
 import shutil
-import scipy.special
 import time
 from tensorflow.python.framework import graph_util
 from models.model_factory import get_model
 from dataset.data_generator import ImageDataGenerator
 from config import cfg
-# cfg = cfg.TEST
-
-os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 
 
-class Tester(object):
+class PbExporter(object):
     def __init__(self, load_data=True, load_model=True):
         self.model_name = cfg.MODEL_NAME
         self.class_names = cfg.CLASS_NAMES
         self.num_classes = cfg.NUM_CLASSES
         self.image_size = cfg.IMAGE_SIZE
 
-        self.image_mean = np.array([121.55213, 113.84197, 99.5037])
-
         # test configurations
+        self.batch_size = cfg.TEST.BATCH_SIZE
         if load_data:
-            self.batch_size = cfg.TEST.BATCH_SIZE
             self.test_data_path = cfg.TEST.TEST_DATASET_PATH
             # load data
             self.test_set, self.next_batch = self.load_dataset()
@@ -160,7 +154,7 @@ class Tester(object):
         image_paths = os.listdir(folder_path)
         num_images = len(image_paths)
 
-        # image_mean = np.array([121.55213, 113.84197, 99.5037])
+        image_mean = np.array([121.55213, 113.84197, 99.5037])
         for idx, path in enumerate(image_paths):
             print('testing {}/{}'.format(idx, num_images))
             img_path = os.path.join(folder_path, path)
@@ -168,7 +162,7 @@ class Tester(object):
             img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
             # do image preprocessing
             img = cv2.resize(img, (self.image_size, self.image_size))
-            img = img - self.image_mean
+            img = img - image_mean
             img = np.expand_dims(img, axis=0)
 
             if self.model.keep_prob is not None:
@@ -236,92 +230,3 @@ class Tester(object):
                 probs = [float(s) for s in probs]
                 labels.append(probs)
         return img_paths, labels
-
-    def test_jpeg_file(self, image_file):
-        img = cv2.imread(image_file)
-        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        # do image preprocessing
-        img = cv2.resize(img, (self.image_size, self.image_size))
-        img = img - self.image_mean
-        img = np.expand_dims(img, axis=0)
-
-        if self.model.keep_prob is not None:
-            feed_dict = {self.model.x_input: img,
-                         self.model.keep_prob: 1.0}
-        else:
-            feed_dict = {self.model.x_input: img}
-
-        logits = self.session.run(self.model.logits_val, feed_dict=feed_dict)
-        logits = np.squeeze(logits, axis=0)
-        # print(logits)
-        s = scipy.special.softmax(logits)
-        # print(s)
-        return s
-
-    def test_gif_file(self, gif_file):
-        vid = cv2.VideoCapture(gif_file)
-        if not vid.isOpened():
-            return []
-
-        logits_list = []
-        while True:
-            ret, frame = vid.read()
-            if not ret:
-                break
-
-            img = cv2.resize(frame, (self.image_size, self.image_size))
-            img = img - self.image_mean
-            img = np.expand_dims(img, axis=0)
-
-            if self.model.keep_prob is not None:
-                feed_dict = {self.model.x_input: img,
-                             self.model.keep_prob: 1.0}
-            else:
-                feed_dict = {self.model.x_input: img}
-
-            logits = self.session.run(self.model.logits_val, feed_dict=feed_dict)
-            logits = np.squeeze(logits, axis=0)
-            s = scipy.special.softmax(logits)
-            logits_list.append(s)
-        return logits_list
-
-    def test_21cn_invalid_38(self, folder):
-        fnames = os.listdir(folder)
-        for name in fnames:
-            print(name)
-            path = os.path.join(folder, name)
-            if path.endswith('.gif'):
-                res = self.test_gif_file(path)
-                for a in res:
-                    self.print_array(a)
-            else:
-                res = self.test_jpeg_file(path)
-                self.print_array(res)
-
-    @staticmethod
-    def print_array(array):
-        n = array.shape[0]
-        buf = ','.join(str(array[i]) for i in range(n))
-        print(buf)
-
-
-if __name__ == '__main__':
-    # 测试训练好的模型，测试参数见config.py
-    # when testing, make sure that the configuration of model matches
-    # the configuration used in the training
-    # - activation_fn
-    # - sgd/adam
-    tester = Tester(load_data=False)
-    # tester.test(num=100)
-    # tester.save_pb(r'D:/resnetv1_50_violence_clf.pb')
-    invalid_21cn = r'D:\data\tests\ng38'
-    tester.test_21cn_invalid_38(invalid_21cn)
-
-    # do image tests and save result into separate folders
-    # name = 'army'
-    # names = ['normal', 'riot', 'crash', 'fire', 'terrorism', 'weapon', 'bloody',
-    # 'protest', 'falungong', 'terrorflag', 'privacy']
-    # for name in names:
-    #     src_path = 'D:\\data\\DATASET2019\\baokong12\\test\\' + name
-    #     dst_path = 'D:\\data\\DATASET2019\\baokong12\\test_result\\' + name
-    #     tester.test_folder(src_path, dst_path)

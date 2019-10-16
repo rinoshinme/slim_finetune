@@ -6,7 +6,7 @@ IMAGE_EXTS = ['.jpg', '.jpeg', '.png', '.bmp']
 
 
 def is_image_file(image_path):
-    if any([image_path.endswith(ext) for ext in IMAGE_EXTS]):
+    if any([image_path.lower().endswith(ext) for ext in IMAGE_EXTS]):
         return True
     else:
         return False

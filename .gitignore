@@ -9,6 +9,7 @@ tools/__pycache__/
 data
 logs
 tmp
+temp/
 public
 .cache
 .env

@@ -1,9 +1,7 @@
 import os
-import cv2
 import platform
 import tensorflow as tf
 import base64
-import numpy as np
 
 from tensorflow.python.saved_model import builder as saved_model_builder
 from tensorflow.python.saved_model.signature_def_utils\

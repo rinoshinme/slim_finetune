@@ -8,6 +8,7 @@ import random
 from models.model_factory import get_model
 from config import cfg
 from utils.image import is_image_file
+
 IMAGE_EXTS = ['.jpg', '.png', '.jpeg', ]
 
 
@@ -284,7 +285,9 @@ class MetricTester(object):
                 sub_target_folder = os.path.join(target_folder, label)
                 if not os.path.exists(sub_target_folder):
                     os.makedirs(sub_target_folder)
-                target_path = os.path.join(sub_target_folder, base_name)
+                # target_path = os.path.join(sub_target_folder, base_name)
+                tmp = random.randint(1, 10000000)
+                target_path = os.path.join(target_folder, label, '%08d_%s' % (tmp, base_name))
 
                 # prevent file over-writing
                 while os.path.exists(target_path):
@@ -302,18 +305,18 @@ if __name__ == '__main__':
     tester = MetricTester(ckpt_path)
 
     # 测试未分类数据
-    # other_folder = r'D:\data\frames'
-    # other_text = r'D:\data\frames.txt'
+    # other_folder = r'E:\dataset\data_crawler\image_downloader_gui_v1.0.5\download_images'
+    # other_text = r'E:\dataset\data_crawler\image_downloader_gui_v1.0.5\download_images.txt'
     # tester.test_folder_all(other_folder, other_text)
-    # other_folder2 = r'D:\data\update'
-    # other_text2 = r'D:\data\update2.txt'
-    # tester.test_folder_all(other_folder2, other_text2)
-    other_folder3 = r'D:\data\baokong\Bad暴乱游行'
-    other_text3 = r'D:\data\baokong\Bad暴乱游行.txt'
+
+    other_folder3 = r'E:\dataset\bloody_frames'
+    other_text3 = r'E:\dataset\bloody_frames.txt'
     # tester.test_folder_all(other_folder3, other_text3)
 
-    for th in [90, 50]:
-        other_target_folder = r'D:\data\baokong\split\{}'.format(th)
+    split_path = r'E:\dataset_utils\splits\bloody_movie_frames'
+
+    for th in [99, 98, 95, 90, 80, 70, 50, 0]:
+        other_target_folder = os.path.join(split_path,  '{}'.format(th))
         tester.move_files(other_text3, other_target_folder, threshold=th/100.0)
 
     # # 测试测试集

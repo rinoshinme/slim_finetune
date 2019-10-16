@@ -2,7 +2,6 @@
 Image data augmentation using opencv
 """
 import cv2
-import numpy as np
 import random
 
 
@@ -11,8 +10,6 @@ def rotate(image, angle):
     (h, w) = image.shape[:2]
     (cx, cy) = (w // 2, h // 2)
     mat = cv2.getRotationMatrix2D((cx, cy), -angle, 1.0)
-    # cos = np.abs(M[0, 0])
-    # sin = np.abs(M[0, 1])
     return cv2.warpAffine(image, mat, (w, h))
 
 
@@ -34,7 +31,3 @@ def random_channel_mutate(image):
     channels = [0, 1, 2]
     random.shuffle(channels)
     return channel_mutate(image, channels)
-
-
-
-

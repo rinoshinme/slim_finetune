@@ -6,7 +6,6 @@ from tensorflow.python.framework import dtypes
 import tensorflow as tf
 from collections import defaultdict
 import random
-# import cv2
 
 
 class ImageDataGenerator(object):
@@ -21,6 +20,7 @@ class ImageDataGenerator(object):
         # self.img_paths is a list of strings
         # self.labels is a list of [probs/one-hot vectors]
         self.img_paths, self.labels = self._read_txt_file(txt_file)
+
         if mode == 'training':
             self.img_paths, self.labels = self._augment_list(self.img_paths, self.labels)
 
@@ -28,17 +28,6 @@ class ImageDataGenerator(object):
 
         if shuffle:
             self.img_paths, self.labels = self._shuffle_lists(self.img_paths, self.labels)
-
-        # class_names = ['normal', 'riot', 'crash', 'fire', 'army', 'terrorism', 'weapon', 'bloody', 'protest']
-        # idx = 0
-        # for path, label in zip(self.img_paths, self.labels):
-        #     idx += 1
-        #     f = path.split('\\')[-2]
-        #     index = self._get_label_from_onehot(label)
-        #     # print(path)
-        #     name = class_names[index]
-        #     # print(name)
-        #     print('{}: {} - {}'.format(idx, f, name))
 
         self.img_paths = convert_to_tensor(self.img_paths, dtype=dtypes.string)
         self.labels = convert_to_tensor(self.labels, dtype=dtypes.float32)
@@ -177,7 +166,8 @@ class ImageDataGenerator(object):
         img_centered = tf.subtract(img_resize, self.IMAGENET_MEAN)
         return img_centered, one_hot
 
-    def _data_augment(self, img, model_type=224):
+    @staticmethod
+    def _data_augment(img, model_type=224):
         # img = tf.image.random_jpeg_quality(img, 50, 90)
         img = tf.image.random_flip_left_right(img)
         img = tf.image.random_brightness(img, max_delta=64./255)

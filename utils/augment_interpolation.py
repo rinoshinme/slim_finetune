@@ -1,6 +1,8 @@
 """
 generate dataset augmentation by image blending
+also called Mixup.
 """
+
 import cv2
 import numpy as np
 import os
@@ -49,29 +51,11 @@ def augment_folder(folder, num_aug, name=None):
         else:
             dst_name = os.path.join(folder, 'aug_%06d.jpg' % i)
         alpha = random.uniform(0.2, 0.8)
-        # print(f1)
-        # print(f2)
-        # print(dst_name)
-        # print('-' * 80)
         image_blend(f1, f2, dst_name, alpha)
 
 
 if __name__ == '__main__':
-    # folder = r'D:\data\DATASET2019\baokong12\train\riot'
-
     folder = r'D:\data\DATASET2019\baokong12_20190701\train'
-    # army: 3844
-    # bloody: 2164
-    # crash: 1097
-    # falungong: 524
-    # fire: 2760
-    # normal: 4232
-    # privacy: 940
-    # protest: 1165
-    # riot: 1092
-    # terrorflag: 692
-    # terrorism: 1458
-    # weapon: 1272
 
     # 1500 samples for each category
     num_aug = {
@@ -88,6 +72,7 @@ if __name__ == '__main__':
         'terrorism': 0,
         'weapon': 300
     }
+
     for name in num_aug.keys():
         print('processing', name)
         subfolder = os.path.join(folder, name)

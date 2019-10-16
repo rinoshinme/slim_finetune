@@ -24,6 +24,9 @@ def extract_video(video_filename, save_folder, save_step=25):
 
 def read_logfile(logfile):
     names = []
+    if not os.path.exists(logfile):
+        f = open(logfile, 'w')
+        f.close()
     with open(logfile, 'r') as logf:
         for line in logf.readlines():
             names.append(line.strip())
@@ -35,7 +38,7 @@ def write_logfile(logfile, name):
         logf.write('%s\n' % name)
 
 
-def extract_batch(video_folder, target_folder, log_file):
+def extract_batch(video_folder, target_folder, log_file, save_step=10):
     names = read_logfile(log_file)
     for root, dirs, files in os.walk(video_folder):
         for f in files:
@@ -46,14 +49,11 @@ def extract_batch(video_folder, target_folder, log_file):
                 continue
             write_logfile(log_file, video_file)
             print('processing {}'.format(video_file))
-            extract_video(video_file, target_folder, save_step=25)
+            extract_video(video_file, target_folder, save_step=save_step)
 
 
 if __name__ == '__main__':
-    # vid = r'D:\data\video\Inside an Al-Shabaab training camp.mp4'
-    target_folder = r'D:\data\frames'
-    # extract_video(vid, target_folder)
-
-    vid_folder = r'D:\data\video'
-    logfile = r'D:\data\video_log.txt'
+    target_folder = r'E:\dataset\bloody_frames'
+    vid_folder = r'D:\data\bloody_video'
+    logfile = r'D:\data\bloody_video\extract_log.txt'
     extract_batch(vid_folder, target_folder, logfile)

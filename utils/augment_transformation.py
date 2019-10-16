@@ -115,6 +115,3 @@ def crop(image, seg=None, margin=5):
         return image, seg
     else:
         return image
-
-
-
