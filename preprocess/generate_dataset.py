@@ -26,7 +26,7 @@ import random
 from utils.image import cvsafe_imread
 
 
-def generate_dataset(root_dir, target_dir, src_names, dst_names, val_ratio=0.15, test_ratio=0.15):
+def generate_dataset(root_dir, target_dir, src_names, dst_names, val_ratio=0.1, test_ratio=0.15):
     target_nums = {}
     for srcname, dstname in zip(src_names, dst_names):
         print(srcname)
@@ -112,14 +112,14 @@ def generate_dataset_text(root_dir, class_names):
 
 
 if __name__ == '__main__':
-    srcfolder = r'D:\data\21cn_baokong'
-    dstfolder = r'E:\Training\DATASET2019\bloody2_20191008'
+    srcfolder = r'D:\data\baokong21cn'
+    dstfolder = r'E:\Training\DATASET2019\bloody3_20191018'
 
     # may map multiple categories to single target group
-    srcnames = ['正常', '血腥']
-    dstnames = ['normal', 'bloody']
+    srcnames = ['正常', '正常2', '正常3', '正常21cn', '正常动漫', '轻微', '血腥', '血腥动漫']
+    dstnames = ['normal', 'normal', 'normal', 'normal', 'normal', 'medium', 'bloody', 'bloody']
 
-    generate_dataset(srcfolder, dstfolder, srcnames, dstnames, val_ratio=0.15, test_ratio=0.15)
+    generate_dataset(srcfolder, dstfolder, srcnames, dstnames, val_ratio=0.1, test_ratio=0.15)
 
-    class_labels = ['normal', 'bloody']
+    class_labels = ['normal', 'medium', 'bloody']
     generate_dataset_text(dstfolder, class_labels)

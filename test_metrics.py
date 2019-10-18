@@ -246,7 +246,12 @@ class MetricTester(object):
                     softmax_results = np.squeeze(softmax_results, axis=0)
 
                     probs = [float(softmax_results[i]) for i in range(self.num_classes)]
-                    violence_index = sum([probs[k] for k in [1, 2, 3, 5, 7, 8]])
+                    if self.num_classes == 9:
+                        violence_index = sum([probs[k] for k in [1, 2, 3, 5, 7, 8]])
+                    elif self.num_classes == 3:
+                        violence_index = probs[1] * 0.5 + probs[2]
+                    else:
+                        violence_index = 0
                     print('testing %d - %s: %.6f' % (cnt, img_path, violence_index))
 
                     prob_values = [str(probs[i]) for i in range(self.num_classes)]
@@ -297,10 +302,10 @@ class MetricTester(object):
 
 
 if __name__ == '__main__':
-    # ckpt_path = r'E:\output_finetune\ResNetV1_101\20190719_132123\ckpt\model-25000'
-    ckpt_path = r'D:\temp\ResNetV1_101_20190719_132123\ckpt\model-25000'
-    # ckpt_path = r'E:\output_finetune\efficientnet-b0\20190808_083523\ckpt\model-13000'
-    # ckpt_path = r'E:\output_finetune\efficientnet-b1\20190809_163814\ckpt\model-28000'
+    # 9 category model
+    # ckpt_path = r'D:\temp\ResNetV1_101_20190719_132123\ckpt\model-25000'
+    # 3 category model v1
+    ckpt_path = r'E:\Training\output_finetune\ResNetV1_101\20191018_051256\ckpt\model-6000'
 
     tester = MetricTester(ckpt_path)
 
@@ -309,15 +314,16 @@ if __name__ == '__main__':
     # other_text = r'E:\dataset\data_crawler\image_downloader_gui_v1.0.5\download_images.txt'
     # tester.test_folder_all(other_folder, other_text)
 
-    other_folder3 = r'E:\dataset\bloody_frames'
-    other_text3 = r'E:\dataset\bloody_frames.txt'
-    # tester.test_folder_all(other_folder3, other_text3)
+    # other_folder3 = r'E:\dataset\bloody_frames'
+    other_folder = r'E:\dataset\baokong21cn\21cn\cn21_cloud_split'
+    other_text = r'E:\dataset\baokong21cn\21cn\cn21_cloud_split.txt'
+    tester.test_folder_all(other_folder, other_text)
 
-    split_path = r'E:\dataset_utils\splits\bloody_movie_frames'
-
-    for th in [99, 98, 95, 90, 80, 70, 50, 0]:
-        other_target_folder = os.path.join(split_path,  '{}'.format(th))
-        tester.move_files(other_text3, other_target_folder, threshold=th/100.0)
+    # split_path = r'E:\dataset_utils\splits\bloody_movie_frames'
+    #
+    # for th in [99, 98, 95, 90, 80, 70, 50, 0]:
+    #     other_target_folder = os.path.join(split_path,  '{}'.format(th))
+    #     tester.move_files(other_text3, other_target_folder, threshold=th/100.0)
 
     # # 测试测试集
     # root_dir = r'E:\DATASET2019\baokong13_20190731\test'

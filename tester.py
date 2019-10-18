@@ -193,6 +193,48 @@ class Tester(object):
             # print(target_path)
             shutil.copyfile(img_path, target_path)
 
+    def test_folder_iterative(self, folder_path, result_path):
+        """
+        Test all images in the folder and save results into separate folders
+        """
+        # image_paths = os.listdir(folder_path)
+        # num_images = len(image_paths)
+
+        # image_mean = np.array([121.55213, 113.84197, 99.5037])
+        for root, files, dirs in os.walk(folder_path):
+            for filename in files:
+                img_path = os.path.join(root, filename)
+
+                img = cv2.imread(img_path)
+                img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+                # do image preprocessing
+                img = cv2.resize(img, (self.image_size, self.image_size))
+                img = img - self.image_mean
+                img = np.expand_dims(img, axis=0)
+
+                if self.model.keep_prob is not None:
+                    feed_dict = {self.model.x_input: img,
+                                 self.model.keep_prob: 1.0}
+                else:
+                    feed_dict = {self.model.x_input: img}
+
+                logits = self.session.run(self.model.logits_val, feed_dict=feed_dict)
+                logits = np.squeeze(logits, axis=0)
+                label = np.argmax(logits)
+
+                result_name = self.class_names[label]
+                result_sub_path = os.path.join(result_path, result_name)
+                if not os.path.exists(result_sub_path):
+                    os.makedirs(result_sub_path)
+
+                target_path = os.path.join(result_sub_path, path)
+
+                # copy into result folder
+                # print(img_path)
+                # print(target_path)
+                shutil.copyfile(img_path, target_path)
+
+
     def save_pb(self, pb_path):
         graph = tf.get_default_graph()
         # self.print_all_nodes(graph, r'D:\graph_resnet.txt')

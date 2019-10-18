@@ -22,7 +22,8 @@ class ImageDataGenerator(object):
         self.img_paths, self.labels = self._read_txt_file(txt_file)
 
         if mode == 'training':
-            self.img_paths, self.labels = self._augment_list(self.img_paths, self.labels)
+            # each category has at least target_size sample lines.
+            self.img_paths, self.labels = self._augment_list(self.img_paths, self.labels, target_size=10000)
 
         self.data_size = len(self.img_paths)
 

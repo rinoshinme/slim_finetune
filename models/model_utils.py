@@ -20,10 +20,11 @@ def load_initial_weights(session, weight_path, train_layers):
         if op_name == 'global_step':
             continue
 
-        op_name_list = op_name.split('/')
-        union_list = [item for item in op_name_list if item in train_layers]
-        if len(union_list) != 0:
-            continue
+        # # load weights anyway [no matter if I want to train this variable]
+        # op_name_list = op_name.split('/')
+        # union_list = [item for item in op_name_list if item in train_layers]
+        # if len(union_list) != 0:
+        #     continue
 
         try:
             with tf.variable_scope('/'.join(op_name.split('/')[0:-1]), reuse=True):

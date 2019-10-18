@@ -58,7 +58,10 @@ class ResNetV1_101(object):
 
             var_list = [v for v in tf.trainable_variables() if
                         v.name.split('/')[-2] in self.train_layers or
-                        v.name.split('/')[-3] in self.train_layers]
+                        v.name.split('/')[-3] in self.train_layers or
+                        # support 'block4/unit_3' type specifications
+                        any([item in v.name for item in self.train_layers])]
+
             # var_list = tf.trainable_variables()
             # var_list = [v for v in tf.trainable_variables() if
             #             v.name.split('/')[1] in self.train_layers]
