@@ -72,14 +72,7 @@ def crop(image, seg=None, margin=5):
     trim = image.shape[fixedaxes]
     center = image.shape[trimaxes] // 2
 
-    print(image.shape)
-    print(fixedaxes)
-    print(trimaxes)
-    print(trim)
-    print(center)
-
     if seg is not None:
-
         hits = np.where(seg != 0)
         mins = np.argmin(hits, axis=1)
         maxs = np.argmax(hits, axis=1)
