@@ -80,8 +80,5 @@ class ResNetV1_50(object):
             correct_prediction = tf.equal(self.prediction, tf.argmax(self.y_input, 1))
             self.accuracy = tf.reduce_mean(tf.cast(correct_prediction, "float"), name="accuracy")
 
-        # print(self.logits.shape.as_list())
-        # print(self.logits_val.shape.as_list())
-
     def load_initial_weights(self, session):
         load_initial_weights(session=session, weight_path=self.WEIGHTS_PATH, train_layers=self.train_layers)

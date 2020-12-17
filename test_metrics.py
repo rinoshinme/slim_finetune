@@ -2,45 +2,33 @@ import numpy as np
 import tensorflow as tf
 import os
 import cv2
-import matplotlib.pyplot as plt
 import shutil
 import random
+from tensorflow.python.framework import graph_util
 from models.model_factory import get_model
-from config import cfg
+# from config import cfg
 from utils.image import is_image_file
 
 IMAGE_EXTS = ['.jpg', '.png', '.jpeg', ]
 
 
-args = {
-    'model_name': 'ResNetV1_101',
-    'class_names': [],
-    'num_classes': 13,
-    'image_size': (224, 224),
-
-}
-
-
 class MetricTester(object):
-    def __init__(self, ckpt_path):
-        self.model_name = cfg.MODEL_NAME
-        self.class_names = cfg.CLASS_NAMES
-        self.num_classes = cfg.NUM_CLASSES
+    def __init__(self, config):
+        self.model_name = config['model_name']  # cfg.MODEL_NAME
+        self.class_names = config['class_names']  # cfg.CLASS_NAMES
+        self.num_classes = config['num_classes']  # cfg.NUM_CLASSES
 
         self.name2idx = {self.class_names[idx]: idx for idx in range(self.num_classes)}
         self.idx2name = {idx: self.class_names[idx] for idx in range(self.num_classes)}
 
-        self.image_size = cfg.IMAGE_SIZE
-
-        # self.input_node_name = cfg.TEST.INPUT_NODE_NAME
-        # self.output_node_name = cfg.TEST.OUTPUT_NODE_NAME
-        # self.dropout_node_name = cfg.TEST.DROPOUT_NODE_NAME
+        self.image_size = config['image_size']  # cfg.IMAGE_SIZE
+        self.ng_indices = config['ng_indices']
 
         self.session = tf.Session()
-        self.model = self.load_model(ckpt_path)
+        self.model = self.load_model(config['ckpt_path'])
 
     def load_model(self, ckpt_path):
-        model = get_model(self.model_name)
+        model = get_model(self.model_name, self.num_classes)
         self.session.run(tf.global_variables_initializer())
         saver = tf.train.Saver(var_list=tf.global_variables())
         saver.restore(self.session, ckpt_path)
@@ -59,6 +47,7 @@ class MetricTester(object):
 
         paths = []
         probs = []
+        print(self.model.logits_val.get_shape().as_list())
         softmax_op = tf.nn.softmax(self.model.logits_val)
         for idx, path in enumerate(image_paths):
             print('testing {}/{}'.format(idx, num_images))
@@ -191,10 +180,12 @@ class MetricTester(object):
         """
         print('start testing...')
         image_mean = np.array([121.55213, 113.84197, 99.5037])
+
         # ignore files that are already tested and saved in the text file.
         filepaths = self.read_paths(text_path)
         # cnt = len(filepaths)
         cnt = 0
+        # print(self.model.logits_val.get_shape().as_list())
         softmax_op = tf.nn.softmax(self.model.logits_val)
         f = open(text_path, 'a+')
         for root, dirs, files in os.walk(folder):
@@ -246,13 +237,17 @@ class MetricTester(object):
                     softmax_results = np.squeeze(softmax_results, axis=0)
 
                     probs = [float(softmax_results[i]) for i in range(self.num_classes)]
-                    if self.num_classes == 9:
-                        violence_index = sum([probs[k] for k in [1, 2, 3, 5, 7, 8]])
-                    elif self.num_classes == 3:
-                        violence_index = probs[1] * 0.5 + probs[2]
-                    else:
-                        violence_index = 0
-                    print('testing %d - %s: %.6f' % (cnt, img_path, violence_index))
+                    # if self.num_classes == 9:
+                    #     violence_index = sum([probs[k] for k in [1, 2, 3, 5, 7, 8]])
+                    #     # violence_index = probs[1] + probs[2]
+                    # elif self.num_classes == 3:
+                    #     violence_index = probs[1] * 0.5 + probs[2]
+                    # elif self.num_classes == 7:
+                    #     violence_index = sum([probs[i] * self.ng_indices[i] for i in range(self.num_classes)])
+                    # else:
+                    #     violence_index = 0
+                    violence_index = sum([probs[i] * self.ng_indices[i] for i in range(self.num_classes)])
+                    print('testing %d - %s: %f' % (cnt, img_path, violence_index))
 
                     prob_values = [str(probs[i]) for i in range(self.num_classes)]
                     prob_text = ','.join(prob_values)
@@ -270,7 +265,7 @@ class MetricTester(object):
                     continue
         f.close()
 
-    def move_files(self, text_file, target_folder, threshold=None):
+    def move_files(self, text_file, target_folder, threshold=None, move_indices=None):
         with open(text_file, 'r') as fp:
             for line in fp.readlines():
                 fields = line.split('\t')
@@ -281,6 +276,10 @@ class MetricTester(object):
                 base_name = os.path.basename(path)
                 scores = [float(v) for v in fields[1].split(',')]
                 max_index = np.argmax(scores)
+
+                if move_indices is not None and max_index not in move_indices:
+                    continue
+
                 max_score = np.max(scores)
 
                 # ignore low-confidence results
@@ -290,9 +289,9 @@ class MetricTester(object):
                 sub_target_folder = os.path.join(target_folder, label)
                 if not os.path.exists(sub_target_folder):
                     os.makedirs(sub_target_folder)
-                # target_path = os.path.join(sub_target_folder, base_name)
-                tmp = random.randint(1, 10000000)
-                target_path = os.path.join(target_folder, label, '%08d_%s' % (tmp, base_name))
+                target_path = os.path.join(sub_target_folder, base_name)
+                # tmp = random.randint(1, 10000000)
+                # target_path = os.path.join(target_folder, label, '%08d_%s' % (tmp, base_name))
 
                 # prevent file over-writing
                 while os.path.exists(target_path):
@@ -300,67 +299,86 @@ class MetricTester(object):
                     target_path = os.path.join(target_folder, label, '%08d_%s' % (tmp, base_name))
                 shutil.move(path, target_path)
 
+    def save_pb(self, pb_path):
+        graph = tf.get_default_graph()
+        # self.print_all_nodes(graph, r'D:\graph_resnet.txt')
+
+        # inputs = graph.get_tensor_by_name(self.input_node_name + ':0')
+        # outputs = graph.get_tensor_by_name(self.output_node_name + ':0')
+        # if self.dropout_node_name is not None:
+        #     dropout = graph.get_tensor_by_name(self.dropout_node_name + ':0')
+        # else:
+        #     dropout = None
+
+        output_node_name = 'resnet_v1_101_1/predictions/Softmax'
+        graph_def = graph.as_graph_def()
+        output_graph_def = graph_util.convert_variables_to_constants(
+            self.session,
+            graph_def,
+            [output_node_name]
+        )
+        with tf.gfile.GFile(pb_path, 'wb') as f:
+            f.write(output_graph_def.SerializeToString())
+
 
 if __name__ == '__main__':
-    # 9 category model
-    # ckpt_path = r'D:\temp\ResNetV1_101_20190719_132123\ckpt\model-25000'
-    # 3 category model v1
-    ckpt_path = r'E:\Training\output_finetune\ResNetV1_101\20191018_051256\ckpt\model-6000'
+    cfg_bloody = dict({
+        'model_name': 'ResNetV1_101',
+        'class_names': ['normal', 'medium', 'bloody'],
+        'ng_indices': [0, 0.5, 1],
+        'num_classes': 3,
+        'image_size': 224,
+        # 3 category model v1
+        # 'ckpt_path': r'E:\Training\output_finetune\ResNetV1_101\20191018_051256\ckpt\model-6000',
+        # 3 category model v2
+        'ckpt_path': r'F:\Training\output_finetune\ResNetV1_101\20191018_102037\ckpt\model-12000'
+    })
 
-    tester = MetricTester(ckpt_path)
+    cfg_violence = dict({
+        'model_name': 'ResNetV1_101',
+        'class_names': ['normal', 'riot', 'crash', 'fire', 'army', 'terrorism', 'weapon', 'bloody', 'protest'],
+        'ng_indices': [0, 1, 1, 1, 0, 1, 0, 1, 1],
+        'num_classes': 9,
+        'image_size': 224,
+        # 9 category model
+        'ckpt_path': r'D:\incoming\ResNetV1_101_20190719_132123\ckpt\model-25000'
+    })
 
-    # 测试未分类数据
-    # other_folder = r'E:\dataset\data_crawler\image_downloader_gui_v1.0.5\download_images'
-    # other_text = r'E:\dataset\data_crawler\image_downloader_gui_v1.0.5\download_images.txt'
-    # tester.test_folder_all(other_folder, other_text)
+    cfg_baokong7 = dict({
+        'model_name': 'ResNetV1_101',
+        'class_names': ['normal', 'army', 'weapon', 'fire', 'bloody', 'terrorism', 'terrorflag'],
+        'ng_indices': [0, 0, 0, 1, 1, 1, 1],
+        'num_classes': 7,
+        'image_size': 224,
+        # 7 category model
+        'ckpt_path': r'F:\Training\output_finetune\ResNetV1_101\20191029_060119\ckpt\model-12000'
+    })
 
-    # other_folder3 = r'E:\dataset\bloody_frames'
-    other_folder = r'E:\dataset\baokong21cn\21cn\cn21_cloud_split'
-    other_text = r'E:\dataset\baokong21cn\21cn\cn21_cloud_split.txt'
-    tester.test_folder_all(other_folder, other_text)
+    # Lost?
+    cfg_baokong7_v2 = dict({
+        'model_name': 'ResNetV1_101',
+        'class_names': ['normal', 'army', 'weapon', 'fire', 'bloody', 'mild_bloody', 'terrorism'],
+        'ng_indices': [0, 0, 0, 1, 1, 0.5, 1],
+        'num_classes': 7,
+        'image_size': 224,
+        # 7 category model
+        'ckpt_path': r'F:\Training\output_finetune\ResNetV1_101\20191106_072716\ckpt\model-18000'
+    })
 
-    # split_path = r'E:\dataset_utils\splits\bloody_movie_frames'
-    #
-    # for th in [99, 98, 95, 90, 80, 70, 50, 0]:
-    #     other_target_folder = os.path.join(split_path,  '{}'.format(th))
-    #     tester.move_files(other_text3, other_target_folder, threshold=th/100.0)
+    tester = MetricTester(cfg_violence)
+    tester.save_pb(r'D:\baokong7.pb')
 
-    # # 测试测试集
-    # root_dir = r'E:\DATASET2019\baokong13_20190731\test'
-    # # test on images and save results into txt file
-    # for name in tester.class_names:
-    #     folder = os.path.join(root_dir, name)
-    #     tester.test_folder(folder)
-    #
-    # # calculate metrics
-    # accs, total_acc = tester.calculate_acc(root_dir)
-    # print('accs = ', accs)
-    # print('total acc = ', total_acc)
+    test_folder = r'D:\data\baokong\baokong'
+    test_text = r'D:\data\baokong\baokong.txt'
+    split_path = r'E:\dataset_utils\splits9'
 
-    # # plot roc curve
-    # positive_labels = ['riot', 'crash', 'fire', 'terrorism', 'bloody', 'protest']
-    #
-    # tprs = []
-    # fprs = []
-    # for i in range(1, 101):
-    #     thresh = 0.01 * i
-    #     tp, fp, tn, fn = tester.calculate_acc_binary(root_dir, positive_labels, thresh)
-    #     tpr = tp * 1.0 / (tp + fn)
-    #     fpr = fp * 1.0 / (fp + tn)
-    #     tprs.append(tpr)
-    #     fprs.append(fpr)
-    #
-    #     print('{}: {}, {}'.format(thresh, tpr, fpr))
-    #
-    # plt.plot(fprs, tprs, '.-')
-    # plt.xlabel('FP')
-    # plt.ylabel('TP')
-    # plt.grid()
-    # plt.show()
+    task = 'run'  # ['run', 'split']
 
-    # # move detects into separate folders
-    # # name = 'army'
-    # for name in tester.class_names:
-    #     txt = os.path.join(root_dir, name + '.txt')
-    #     target_folder = os.path.join(root_dir, 'result__high_' + name)
-    #     tester.check_result(txt, target_folder, thresh=0.9)
+    if task == 'run':
+        tester.test_folder_all(test_folder, test_text)
+    elif task == 'split':
+        thresholds = [99, 98, 97, 96, 95, 90, 70, 50, 10, 0]
+        # thresholds = [99, 98, 95]
+        for th in thresholds:
+            sub_path = os.path.join(split_path,  '{}'.format(th))
+            tester.move_files(test_text, sub_path, threshold=th/100.0)

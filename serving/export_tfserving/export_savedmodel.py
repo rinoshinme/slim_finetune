@@ -15,7 +15,6 @@ from tensorflow.python.saved_model.signature_constants import PREDICT_INPUTS
 from tensorflow.python.saved_model.signature_constants import PREDICT_OUTPUTS
 
 from export_tfserving.violence_model import ViolenceModelResNetV1L101, InputType
-from export_tfserving.nsfw_model import NsfwResNetV1L152
 
 """Builds a SavedModel which can be used for deployment with
 gcloud ml-engine, tensorflow-serving, ...
@@ -58,8 +57,9 @@ if __name__ == "__main__":
     # args = parser.parse_args()
 
     # model = OpenNsfwModel()
-    # model = ViolenceModelResNetV1L101(num_classes=9)
-    model = NsfwResNetV1L152(num_classes=7)
+    # model = ViolenceModelResNetV1L101(num_classes=9)  # violence model
+    model = ViolenceModelResNetV1L101(num_classes=3)  # bloody model
+    # model = NsfwResNetV1L152(num_classes=7)
 
     # parameters
     if os_type == 'Darwin':
@@ -67,10 +67,11 @@ if __name__ == "__main__":
         model_weights = '/Volumes/Elements/output_finetune/ResNetV1_101/20190719_132123/ckpt/model-25000'
         img_path = os.path.expanduser('~/Desktop/fire_002626.jpg')
     elif os_type == 'Windows':
-        export_base_path = r'D:/projects/tfserving/nsfw_new/'
+        export_base_path = r'D:/projects/tfserving/new_bloody_model_c3_test/'
         # model_weights = r'F:\output_finetune\ResNetV1_101\20190719_132123\ckpt\model-25000'
-        model_weights = r'D:\temp\model-150000'
-        img_path = r'D:\data\baokong2\normal\27.jpg'
+        # model_weights = r'D:\temp\model-150000'
+        model_weights = r'F:\Training\output_finetune\ResNetV1_101\20191018_102037\ckpt\model-12000'
+        # img_path = r'D:\data\baokong2\normal\27.jpg'
     else:
         raise ValueError('os_type not supported')
     export_version = '1'
@@ -81,9 +82,9 @@ if __name__ == "__main__":
 
     with tf.Session() as sess:
         sess.run(tf.global_variables_initializer())
-        model.build(weight_path=model_weights,
-                    sess=sess,
-                    input_type=input_type)
+        model._build(weight_path=model_weights,
+                     sess=sess,
+                     input_type=input_type)
 
         # test_model(model, img_path, sess)
 

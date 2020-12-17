@@ -27,7 +27,7 @@ class ViolenceModelResNetV1L101(object):
     def __init__(self, num_classes):
         self.num_classes = num_classes
 
-    def build(self, weight_path, sess, input_type=InputType.BASE64_JPEG):
+    def _build(self, weight_path, sess, input_type=InputType.BASE64_JPEG):
         self.input_tensor = None
         self.session = sess
         if input_type == InputType.TENSOR:
@@ -43,9 +43,9 @@ class ViolenceModelResNetV1L101(object):
         with arg_scope(resnet_v1.resnet_arg_scope(activation_fn=tf.nn.relu,
                                                   weight_decay=0.0001)):
             self.logits_val, end_points = resnet_v1.resnet_v1_101(self.input_tensor,
-                                                         num_classes=self.num_classes,
-                                                         is_training=False,
-                                                         reuse=tf.AUTO_REUSE)
+                                                                  num_classes=self.num_classes,
+                                                                  is_training=False,
+                                                                  reuse=tf.AUTO_REUSE)
         # self.predictions = tf.nn.softmax(self.logits_val, name='Softmax')
         self.predictions = end_points['predictions']
         self.output = tf.identity(self.predictions, name='outputs')

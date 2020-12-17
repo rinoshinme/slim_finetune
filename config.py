@@ -19,10 +19,6 @@ cfg = __C
 
 ###########################################
 # Class Configurations
-# __C.CLASS_NAMES = ['normal', 'riot', 'crash', 'fire', 'army', 'terrorism', 'weapon', 'bloody', 'protest']
-# __C.CLASS_NAMES = ['normal', 'army', 'bloody', 'crash', 'fire', 'identity', 'normal_artificial', 'normal_crowd',
-#                    'normal_document', 'protest', 'riot', 'terrorism', 'weapon']
-# __C.CLASS_NAMES = ['hat_on', 'hat_off', 'other']
 __C.CLASS_NAMES = ['normal', 'medium', 'bloody']
 __C.NUM_CLASSES = len(__C.CLASS_NAMES)
 
@@ -127,7 +123,7 @@ if os_type == 'Windows':
     __C.TEST.BATCH_SIZE = 1
 
     # 9 category model file
-    __C.TEST.CHECKPOINT_PATH = r'E:\Training\output_finetune\ResNetV1_101\20190719_132123\ckpt\model-25000'
+    __C.TEST.CHECKPOINT_PATH = r'D:\incoming\ResNetV1_101_20190719_132123\ckpt\model-25000'
     # 3 category model file v1
     __C.TEST.CHECKPOINT_PATH = r''
 

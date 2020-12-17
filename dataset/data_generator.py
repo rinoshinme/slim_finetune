@@ -51,6 +51,9 @@ class ImageDataGenerator(object):
         data = data.batch(batch_size)
         data = data.repeat()
         self.iterator = data.make_one_shot_iterator()
+    
+    def __len__(self):
+        return self.data_size
 
     def _read_txt_file(self, txt_file):
         """

@@ -11,10 +11,11 @@ from models.resnet_v2_152 import ResNetV2_152
 from models.densenet_121 import DenseNet121
 from models.mobilenet_v1 import MobileNetV1
 from models.efficientnet import EfficientNet
-from config import cfg
 
 
-def get_model(model_name, num_classes=cfg.NUM_CLASSES, train_layers=cfg.TRAIN_LAYERS):
+def get_model(model_name, num_classes, train_layers=None):
+    if train_layers is None:
+        train_layers = 'DEFAULT'
     if model_name == 'VGG16':
         model = Vgg16(num_classes=num_classes, train_layers=train_layers)
     elif model_name == 'InceptionV3':

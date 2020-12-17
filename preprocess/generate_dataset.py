@@ -112,14 +112,18 @@ def generate_dataset_text(root_dir, class_names):
 
 
 if __name__ == '__main__':
-    srcfolder = r'D:\data\baokong21cn'
-    dstfolder = r'E:\Training\DATASET2019\bloody3_20191018'
+    srcfolder = r'D:\data\baokong'
+    dstfolder = r'E:\Training\DATASET2019\baokong07_20191029'
 
     # may map multiple categories to single target group
-    srcnames = ['正常', '正常2', '正常3', '正常21cn', '正常动漫', '轻微', '血腥', '血腥动漫']
-    dstnames = ['normal', 'normal', 'normal', 'normal', 'normal', 'medium', 'bloody', 'bloody']
+    srcnames = ['OK爆炸火灾', 'OK反动旗帜', 'OK军队警察', 'OK恐怖主义旗帜', 'OK恐怖组织',
+                'OK手持武器', 'OK武器', 'OK血腥尸体', 'OK正常', '警察军队',
+                '恐怖组织']
+    dstnames = ['fire', 'terrorflag', 'army', 'terrorflag', 'terrorism',
+                'army', 'weapon', 'bloody', 'normal', 'army',
+                'terrorism']
 
     generate_dataset(srcfolder, dstfolder, srcnames, dstnames, val_ratio=0.1, test_ratio=0.15)
 
-    class_labels = ['normal', 'medium', 'bloody']
+    class_labels = ['normal', 'army', 'weapon', 'fire', 'bloody', 'terrorism', 'terrorflag']
     generate_dataset_text(dstfolder, class_labels)

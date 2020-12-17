@@ -56,13 +56,6 @@ class Vgg16(object):
                         v.name.split('/')[-2] in self.train_layers or v.name.split('/')[-3] in self.train_layers]
             gradients = tf.gradients(self.loss, var_list)
             self.grads_and_vars = list(zip(gradients, var_list))
-            # opt_name = cfg.TRAIN.OPTIMIZER
-            # if opt_name == 'sgd':
-            #     optimizer = tf.train.GradientDescentOptimizer(self.learning_rate)
-            # elif opt_name == 'adam':
-            #     optimizer = tf.train.AdamOptimizer(self.learning_rate)
-            # else:
-            #     raise ValueError('Optimizer not supported')
 
             optimizer = get_optimizer(cfg.TRAIN.OPTIMIZER, self.learning_rate)
 
