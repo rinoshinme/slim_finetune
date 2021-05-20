@@ -9,7 +9,6 @@ validation accuracy by a large margin, this script is used to find the reason fo
 
 ==== tf.image.decode_images return RGB format image array 
 ==== cv2.imread open images to BGR format by default.
-
 """
 
 
