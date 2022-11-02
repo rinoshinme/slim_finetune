@@ -11,8 +11,8 @@ public
 .idea/
 .pytest_cache
 *.sqlite3
-test/textures.py
 venv
 api_test/results/
 test/
 checkpoints/
+open_api/
