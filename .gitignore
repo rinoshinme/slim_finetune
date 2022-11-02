@@ -1,12 +1,7 @@
 __pycache__/
-dataset/__pycache__/
-export_tfserving/__pycache__/
-models/__pycache__/
-nets/__pycache__/
-tools/__pycache__/
 *.py[cod]
 .ipynb_checkpoints
-data
+data/
 logs
 tmp
 temp/
@@ -18,3 +13,6 @@ public
 *.sqlite3
 test/textures.py
 venv
+api_test/results/
+test/
+checkpoints/

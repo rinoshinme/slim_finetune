@@ -12,6 +12,9 @@ def is_image_file(filename):
 
 
 def copy_valid_files(src_folder, dst_folder):
+    if not os.path.exists(dst_folder):
+        os.makedirs(dst_folder)
+    
     fnames = os.listdir(src_folder)
     for name in fnames:
         print(name)
